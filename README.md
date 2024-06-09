@@ -1,6 +1,6 @@
 # Prerrequisitos:
   * Python 3.10 o superior, puedes instalarlo en [python.org](https://python.org)
-  * Node 20
+  * Node 20, puedes instalarlo desde [nodejs.org](https://nodejs.org/)
   * Manegador de paquetes de Node (NPM, PNPM o YARN)
 # Instalacion
 
