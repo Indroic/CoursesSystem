@@ -1,0 +1,25 @@
+{
+  "name": "courses-system",
+  "version": "1.0.0",
+  "description": "",
+  "workspaces": [
+    "coursesSystem/**"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "install-dependencies": "npm install && pip install -r requirements.txt && cd coursesSystem/frontend && npm install",
+    "dev-backend": "cd coursesSystem/backend && python3 manage.py runserver",
+    "dev-frontend": "cd coursesSystem/frontend && npm run dev", 
+    "dev": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
+    "start": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
+    "co": "sui-mono commit",
+    "migrate": "cd coursesSystem/backend && python manage.py migrate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@s-ui/mono": "^2.45.0",
+    "concurrently": "^8.2.2"
+  }
+}

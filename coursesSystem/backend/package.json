@@ -1,0 +1,16 @@
+{
+  "name": "courses-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "python manage.py runserver",
+    "start": "python manage.py runserver"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@s-ui/mono": "^2.45.0"
+  }
+}
