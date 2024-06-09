@@ -1,4 +1,4 @@
-# Prerequisitos:
+# Prerrequisitos:
   * Python 3.10 o superior, puedes instalarlo en [python.org](python.org)
   * Node 20
   * Manegador de paquetes de Node (NPM, PNPM o YARN)
