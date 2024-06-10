@@ -7,8 +7,8 @@
   ],
   "main": "index.js",
   "scripts": {
-    "install-dependencies": "npm install && pip install -r requirements.txt && cd coursesSystem/frontend && npm install",
-    "dev-backend": "cd coursesSystem/backend && python3 manage.py runserver",
+    "install-dependencies": "npm install && pip install -r requeriments.txt && cd coursesSystem/frontend && npm install",
+    "dev-backend": "cd coursesSystem/backend && python manage.py runserver",
     "dev-frontend": "cd coursesSystem/frontend && npm run dev", 
     "dev": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
     "start": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
