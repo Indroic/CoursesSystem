@@ -16,7 +16,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static  
+
+from users.urls import router as user_router
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+# generador de las URL para los archivos multimedia
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+# agrega las URL del modulo de usuarios
+urlpatterns += user_router.urls
