@@ -97,6 +97,9 @@ class User(AbstractUser):
     #se establece el manejador de usuarios
     objects = UserManager()
 
+
+    def __str__(self):
+        return self.username + " - " + str(self.ci)
     
     def delete(self, *args, **kwargs):
         if self.avatar.path != settings.DEFAULT_AVATAR:
