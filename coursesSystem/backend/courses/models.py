@@ -63,7 +63,7 @@ class Course(models.Model):
     miniature = models.ImageField(upload_to=generar_nombre_miniatura, blank=False, null=False, default="miniatures/default.jpg")
     
     
-    num_leccions = models.IntegerField(default=0)
+    num_lessons = models.IntegerField(default=0)
     
     
     created_at = models.DateTimeField(auto_now_add=True)
@@ -86,7 +86,7 @@ class Course(models.Model):
 
 
 
-class Leccion(models.Model):
+class Lesson(models.Model):
     
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -95,7 +95,7 @@ class Leccion(models.Model):
     title = models.CharField(max_length=200)
     
     
-    description = models.CharField(max_length=200)
+    description = models.CharField(max_length=10000)
     
     
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='leccions')
@@ -124,19 +124,17 @@ class Leccion(models.Model):
             except FileNotFoundError:
                 pass
 
-
-        if self.video.path != '':
-            try:
-                os.remove(self.video.path)
-            except FileNotFoundError:
-                pass
+        try:
+            os.remove(self.video.path)
+        except Exception as e:
+            pass
 
 
 
-        if self.course.num_leccions <= 0:
+        if self.course.num_lessons <= 0:
             return super().delete(*args, **kwargs)
         
-        self.course.num_leccions -= 1
+        self.course.num_lessons -= 1
         
         self.course.save()
         

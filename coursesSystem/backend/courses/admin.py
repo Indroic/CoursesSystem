@@ -1,12 +1,10 @@
-from typing import Any
 from django.contrib import admin
-from django import forms 
-from .models import Course, Leccion
+from .models import Course, Lesson
 
 
 
-class LeccionAdmin(admin.ModelAdmin):
-    model = Leccion
+class LessonAdmin(admin.ModelAdmin):
+    model = Lesson
     list_display = ('title', 'description', 'created_at', 'course')
 
     fieldsets = (
@@ -15,23 +13,23 @@ class LeccionAdmin(admin.ModelAdmin):
 
     list_filter = ('updated_at', 'created_at', 'course')
 
-    def save_model(self, request, obj: Leccion, form, change):
+    def save_model(self, request, obj: Lesson, form, change):
         if not change:
-            obj.course.num_leccions += + 1
+            obj.course.num_lessons += + 1
             obj.course.save()
 
         return super().save_model(request, obj, form, change)
 class CoursesAdmin(admin.ModelAdmin):
     model = Course
 
-    list_display = ('name', 'description', 'level', 'miniature', 'num_leccions', 'uploaded_by')
+    list_display = ('name', 'description', 'level', 'miniature', 'num_lessons', 'uploaded_by')
 
     fieldsets = (
-        ("Details", {'fields': ('name', 'description', 'level', 'miniature', 'num_leccions', 'uploaded_by') } ),)
+        ("Details", {'fields': ('name', 'description', 'level', 'miniature', 'uploaded_by') } ),)
     
     list_filter = ('level', 'uploaded_by')
     
 
 
 admin.site.register(Course, CoursesAdmin)
-admin.site.register(Leccion, LeccionAdmin)
+admin.site.register(Lesson, LessonAdmin)
