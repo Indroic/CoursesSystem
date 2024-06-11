@@ -15,19 +15,34 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static  
+from rest_framework.routers import DefaultRouter
 
-from users.urls import router as user_router
+from users.urls import urlpatterns as user_urls, router as user_router
+from courses.urls import router as courses_router
 
+root_router = DefaultRouter()
+
+# agrega las URL del modulo de usuarios
+root_router.registry.extend(user_router.registry)
+
+# agrega las URL del modulo de cursos
+root_router.registry.extend(courses_router.registry)
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(root_router.urls))
+
 ]
+
+# Urls del JWT
+urlpatterns += user_urls
+
+
 # generador de las URL para los archivos multimedia
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# agrega las URL del modulo de usuarios
-urlpatterns += user_router.urls
+

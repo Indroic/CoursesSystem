@@ -1,5 +1,7 @@
 import uuid
+import os
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.conf import settings
 from django.db import models
 
 
@@ -95,4 +97,15 @@ class User(AbstractUser):
     #se establece el manejador de usuarios
     objects = UserManager()
 
+
+    def __str__(self):
+        return self.username + " - " + str(self.ci)
     
+    def delete(self, *args, **kwargs):
+        if self.avatar.path != settings.DEFAULT_AVATAR:
+            try:
+                os.remove(self.avatar.path)
+            except FileNotFoundError:
+                pass
+
+        return super().delete(*args, **kwargs)

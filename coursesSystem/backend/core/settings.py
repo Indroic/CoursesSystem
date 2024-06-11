@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     # apps
     'users',
+    'courses',
 ]
 
 AUTH_USER_MODEL = 'users.User'
@@ -130,6 +131,12 @@ STATIC_URL = 'static/'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+AVATAR_DIR = os.path.join(MEDIA_ROOT, 'avatars/')
+MINIATURE_DIR = os.path.join(MEDIA_ROOT, 'miniatures/')
+
+DEFAULT_AVATAR = os.path.join(AVATAR_DIR, 'default.jpg')
+DEFAULT_MINIATURE= os.path.join(MINIATURE_DIR, 'default.jpg')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
