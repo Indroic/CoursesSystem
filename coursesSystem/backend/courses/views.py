@@ -1,7 +1,5 @@
 from django.shortcuts import render
-
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import permission_classes as permission_classes_decorator
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -27,6 +25,9 @@ class CourseViewSet(ModelViewSet):
     def get_permissions(self, *args, **kwargs):
 
         permission_classes = [IsAuthenticated]
+
+        if self.action == "list" or self.action == "retrieve":
+            permission_classes = []
 
         if self.action == "create":
             permission_classes.append(CanAddCourse)
