@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-13 23:04-0400\n"
+"POT-Creation-Date: 2024-06-13 23:11-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
+
+#: certificados/models.py:19 exams/models.py:36 exams/models.py:51
+msgid "Exam"
+msgstr "Examen"
+
+#: certificados/models.py:23 certificados/models.py:44 users/models.py:85
+#: users/models.py:127
+msgid "User"
+msgstr "Usuario"
+
+#: certificados/models.py:27 certificados/models.py:56
+msgid "Date"
+msgstr "Fecha"
+
+#: certificados/models.py:30 certificados/models.py:48
+msgid "Exam Realized"
+msgstr "Examen Realizado"
+
+#: certificados/models.py:31
+msgid "Exams Realized"
+msgstr "Examenes Realizados"
+
+#: certificados/models.py:52 courses/models.py:104 courses/models.py:147
+#: exams/models.py:23
+msgid "Course"
+msgstr "Curso"
+
+#: certificados/models.py:59
+msgid "Certificate"
+msgstr "Certificado"
+
+#: certificados/models.py:60
+msgid "Certificates"
+msgstr "Certificados"
 
 #: core/settings.py:127
 msgid "Spanish"
@@ -79,10 +113,6 @@ msgstr "Creado el"
 msgid "Updated at"
 msgstr "Actualizado el"
 
-#: courses/models.py:104 courses/models.py:147 exams/models.py:23
-msgid "Course"
-msgstr "Curso"
-
 #: courses/models.py:105
 msgid "Courses"
 msgstr "Cursos"
@@ -123,10 +153,6 @@ msgstr "Creado el"
 msgid "Updated At"
 msgstr "Actualizado el"
 
-#: exams/models.py:36 exams/models.py:51
-msgid "Exam"
-msgstr "Examen"
-
 #: exams/models.py:54 exams/models.py:63 exams/models.py:84
 msgid "Question"
 msgstr "Pregunta"
@@ -166,10 +192,6 @@ msgstr "Usuarios"
 #: users/models.py:78
 msgid "Email address"
 msgstr "Dirección de correo"
-
-#: users/models.py:85 users/models.py:127
-msgid "User"
-msgstr "Usuario"
 
 #: users/models.py:92
 msgid "First Name"
