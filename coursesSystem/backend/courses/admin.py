@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
 from .models import Course, Lesson
 
 class CoursesAdmin(admin.ModelAdmin):
@@ -7,7 +8,7 @@ class CoursesAdmin(admin.ModelAdmin):
     list_display = ('name',  'level', 'miniature', 'num_lessons', 'uploaded_by')
 
     fieldsets = (
-        ("Details", {'fields': ('name', 'description', 'level', 'miniature', 'uploaded_by') } ),)
+        (_("Details"), {'fields': ('name', 'description', 'level', 'miniature', 'uploaded_by') } ),)
     
     list_filter = ('level', 'uploaded_by')
 
@@ -17,7 +18,7 @@ class LessonAdmin(admin.ModelAdmin):
     search_fields = ('title', 'course__name', 'course__uploaded_by__username')
 
     fieldsets = (
-        ("Details", {'fields': ('title', 'description', 'miniature', 'video', 'course') } ),
+        (_("Details"), {'fields': ('title', 'description', 'miniature', 'video', 'course') } ),
     )
 
     list_filter = ('updated_at', 'created_at', 'course')

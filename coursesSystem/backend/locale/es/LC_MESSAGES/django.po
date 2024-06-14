@@ -1,0 +1,163 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-06-13 22:35-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
+"1 : 2;\n"
+#: core/settings.py:127
+msgid "Spanish"
+msgstr "Español"
+
+#: core/settings.py:128
+msgid "English"
+msgstr "Ingles"
+
+#: courses/admin.py:11 courses/admin.py:21
+msgid "Details"
+msgstr "Detalles"
+
+#: courses/apps.py:7
+msgid "Cursos"
+msgstr "Cursos"
+
+#: courses/models.py:56
+msgid "Name of Course"
+msgstr "Nombre del Curso"
+
+#: courses/models.py:63
+msgid "Course Description"
+msgstr "Descripcion del Curso"
+
+#: courses/models.py:70 courses/models.py:71
+msgid "Initial"
+msgstr "Inicial"
+
+#: courses/models.py:72
+msgid "Medium"
+msgstr "Medio"
+
+#: courses/models.py:73
+msgid "Advanced"
+msgstr "Avanzado"
+
+#: courses/models.py:74
+msgid "Course Level"
+msgstr "Nivel del Curso"
+
+#: courses/models.py:80
+msgid "Uploaded by"
+msgstr "Subido por"
+
+#: courses/models.py:87 courses/models.py:154
+msgid "Miniature"
+msgstr "Miniatura"
+
+#: courses/models.py:92
+msgid "Number of Lessons"
+msgstr "Numero de Lecciones"
+
+#: courses/models.py:96 courses/models.py:164
+msgid "Created at"
+msgstr "Creado en"
+
+#: courses/models.py:100 courses/models.py:168
+msgid "Updated at"
+msgstr "Actualizado en"
+
+#: courses/models.py:104 courses/models.py:147
+msgid "Course"
+msgstr "Curso"
+
+#: courses/models.py:105
+msgid "Courses"
+msgstr "Cursos"
+
+#: courses/models.py:134
+msgid "Title"
+msgstr "Titulo"
+
+#: courses/models.py:141
+msgid "Description"
+msgstr "Descripcion"
+
+#: courses/models.py:160
+msgid "Video"
+msgstr "Video"
+
+#: courses/models.py:171
+msgid "Lesson"
+msgstr "Leccion"
+
+#: courses/models.py:172
+msgid "Lessons"
+msgstr "Lecciones"
+
+#: users/admin.py:17
+msgid "Personal info"
+msgstr "Informacion Personal"
+
+#: users/admin.py:18
+msgid "Permissions"
+msgstr "Permisos"
+
+#: users/apps.py:7 users/models.py:128
+msgid "Users"
+msgstr "Usuarios"
+
+#: users/models.py:78
+msgid "Email address"
+msgstr "Direccion de Correo Electronico"
+
+#: users/models.py:85 users/models.py:127
+msgid "User"
+msgstr "Usuario"
+
+#: users/models.py:92
+msgid "First Name"
+msgstr "Primer Nombre"
+
+#: users/models.py:99
+msgid "Last Name"
+msgstr "Apellido"
+
+#: users/models.py:106
+msgid "Password"
+msgstr "Contraseña"
+
+#: users/models.py:113
+msgid "Avatar"
+msgstr "Avatar"
+
+#: users/views.py:28
+msgid "User Registered successfully"
+msgstr "Usuario Registrado Existosamente"
+
+#: users/views.py:33
+msgid "nothing here :)"
+msgstr "Nada aqui :)"
+
+#: users/views.py:36
+msgid "you are bothersome people, really 7-7"
+msgstr "Eres una persona molesta, sinceramente 7-7"
+
+#: users/views.py:39
+msgid "you are very bothersome people, really 7-7"
+msgstr "Eres una persona muy molesta, de verdad 7-7"
+
+#: users/views.py:45
+msgid "do not continue with your attempts >:v"
+msgstr "Deja de hacer tus intentos >:v"

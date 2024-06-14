@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static  
+from django.views.i18n import set_language
 from rest_framework.routers import DefaultRouter
 
 from users.urls import urlpatterns as user_urls, router as user_router
@@ -34,7 +35,8 @@ root_router.registry.extend(courses_router.registry)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(root_router.urls))
+    path('api/', include(root_router.urls)),
+    path('api/set_language/', set_language, name='set_language'),
 
 ]
 

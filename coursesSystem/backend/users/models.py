@@ -75,42 +75,42 @@ class User(AbstractUser):
     email = models.EmailField(unique=True, 
                               blank=False, 
                               null=False,
-                              verbose_name=_('email address'))
+                              verbose_name=_('Email address'))
 
     # campo de nombre de usuario
     username = models.CharField(max_length=200, 
                                 blank=False, 
                                 null=False, 
                                 unique=True,
-                                verbose_name=_('username'))
+                                verbose_name=_('User'))
 
     #campo de primer nombre del usuario
     first_name = models.CharField(max_length=200, 
                                   blank=False, 
                                   null=False, 
                                   unique=False,
-                                  verbose_name=_('first name'))
+                                  verbose_name=_('First Name'))
 
     # campo del primero apellido
     last_name = models.CharField(max_length=200, 
                                  blank=False, 
                                  null=False, 
                                  unique=False,
-                                 verbose_name=_('last name'))
+                                 verbose_name=_('Last Name'))
 
     # campo de contraseña
     password = models.CharField(max_length=200, 
                                 blank=False, 
                                 null=False, 
                                 unique=False,
-                                verbose_name=_('password'))
+                                verbose_name=_('Password'))
 
     # campo de imagen de perfil del usuario
     avatar = models.ImageField(upload_to=generar_nombre, 
                                blank=False, 
                                null=False, 
                                default="avatars/default.jpg",
-                               verbose_name=_('avatar'))
+                               verbose_name=_('Avatar'))
     
     # atributos de django
     # se establece el campo de username como el campo de identificacion
@@ -123,8 +123,10 @@ class User(AbstractUser):
 
 
     class Meta:
+        db_table = 'users'
         verbose_name = _('User')
         verbose_name_plural = _('Users')
+
 
 
     def __str__(self):
