@@ -24,6 +24,10 @@ class Exam(models.Model):
     course = models.ForeignKey(Course, 
                                on_delete=models.CASCADE, 
                                related_name='exams',
+                               null=False,
+                               blank=False,
+                               editable=False,
+                               unique=False,
                                verbose_name=_("Course"))
 
     # Numero de preguntas que tiene un examen
