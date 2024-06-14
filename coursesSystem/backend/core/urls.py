@@ -23,6 +23,7 @@ from rest_framework.routers import DefaultRouter
 
 from users.urls import urlpatterns as user_urls, router as user_router
 from courses.urls import router as courses_router
+from exams.urls import router as exam_router
 
 root_router = DefaultRouter()
 
@@ -31,6 +32,11 @@ root_router.registry.extend(user_router.registry)
 
 # agrega las URL del modulo de cursos
 root_router.registry.extend(courses_router.registry)
+
+# agrega las URL del modulo de examenes
+root_router.registry.extend(exam_router.registry)
+
+
 
 
 urlpatterns = [
