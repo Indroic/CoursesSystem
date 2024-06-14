@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Permission
+from django.utils.translation import gettext_lazy as _
 
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -24,24 +25,24 @@ class RegisterViewSet(viewsets.ViewSet):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return Response({"message": "User Registered successfully"}, status=status.HTTP_201_CREATED)
+        return Response({"message": _("User Registered successfully")}, status=status.HTTP_201_CREATED)
     
     # funciones a ignorar, solo estan para que no genere errores(osea, estan de adorno)
 
     def list(self, request):
-        return Response("nothing here :)", status=status.HTTP_200_OK)
+        return Response(_("nothing here :)"), status=status.HTTP_200_OK)
     
     def retrieve(self, request, pk=None):
-        return Response("you are bothersome people, really 7-7", status=status.HTTP_200_OK)
+        return Response(_("you are bothersome people, really 7-7"), status=status.HTTP_200_OK)
     
     def update(self, request, pk=None):
-        return Response("you are very bothersome people, really 7-7", status=status.HTTP_200_OK)
+        return Response(_("you are very bothersome people, really 7-7"), status=status.HTTP_200_OK)
     
     def partial_update(self, request, pk=None):
         return Response("...", status=status.HTTP_200_OK)
     
     def destroy(self, request, pk):
-        return Response("do not continue with your attempts >:v", status=status.HTTP_200_OK)
+        return Response(_("do not continue with your attempts >:v"), status=status.HTTP_200_OK)
 
 
 

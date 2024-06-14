@@ -1,6 +1,7 @@
 import uuid
 import os
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from django.db import models
 
@@ -61,33 +62,56 @@ class User(AbstractUser):
 
     """
     # campo de identificacion unico
-    id= models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id= models.UUIDField(primary_key=True, 
+                         default=uuid.uuid4, 
+                         editable=False)
 
     # campo de cedula de identidad
-    ci = models.IntegerField(unique=True, blank=False, null=False)
+    ci = models.IntegerField(unique=True, 
+                             blank=False, 
+                             null=False)
 
     # campo de email electronico
-    email = models.EmailField(unique=True, blank=False, null=False)
+    email = models.EmailField(unique=True, 
+                              blank=False, 
+                              null=False,
+                              verbose_name=_('email address'))
 
     # campo de nombre de usuario
-    username = models.CharField(max_length=200, blank=False, null=False, unique=True)
+    username = models.CharField(max_length=200, 
+                                blank=False, 
+                                null=False, 
+                                unique=True,
+                                verbose_name=_('username'))
 
     #campo de primer nombre del usuario
-    first_name = models.CharField(max_length=200, blank=False, null=False, unique=False)
+    first_name = models.CharField(max_length=200, 
+                                  blank=False, 
+                                  null=False, 
+                                  unique=False,
+                                  verbose_name=_('first name'))
 
     # campo del primero apellido
-    last_name = models.CharField(max_length=200, blank=False, null=False, unique=False)
+    last_name = models.CharField(max_length=200, 
+                                 blank=False, 
+                                 null=False, 
+                                 unique=False,
+                                 verbose_name=_('last name'))
 
     # campo de contraseña
-    password = models.CharField(max_length=200, blank=False, null=False, unique=False)
+    password = models.CharField(max_length=200, 
+                                blank=False, 
+                                null=False, 
+                                unique=False,
+                                verbose_name=_('password'))
 
     # campo de imagen de perfil del usuario
-    avatar = models.ImageField(upload_to=generar_nombre, blank=False, null=False, default="avatars/default.jpg")
+    avatar = models.ImageField(upload_to=generar_nombre, 
+                               blank=False, 
+                               null=False, 
+                               default="avatars/default.jpg",
+                               verbose_name=_('avatar'))
     
-    # campo de rol
-    rol = models.CharField(max_length=20, choices=[("admin", "admin"), ("staff", "staff"), ("profesor", "profesor"), ("estudiante", "estudiante")], default="estudiante")
-
-
     # atributos de django
     # se establece el campo de username como el campo de identificacion
     USERNAME_FIELD = 'username'
@@ -96,6 +120,11 @@ class User(AbstractUser):
 
     #se establece el manejador de usuarios
     objects = UserManager()
+
+
+    class Meta:
+        verbose_name = _('User')
+        verbose_name_plural = _('Users')
 
 
     def __str__(self):
