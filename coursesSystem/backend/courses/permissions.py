@@ -2,15 +2,20 @@ from rest_framework.permissions import BasePermission
 
 from .models import Course, Lesson
 
-
+# Permisos para Cursos
 class CanAddCourse(BasePermission):
+
+    # Permisos para Cursos
     def has_permission(self, request, view):
         
+        # Obtiene los permisos del usuario
         permisos_usuario = request.user.user_permissions.all()
         
+        # Verifica si el usuario es superusuario
         if request.user.is_superuser:
             return True
         
+        # Verifica si el usuario tiene el permiso adecuado
         for permiso in permisos_usuario:
             if permiso.codename == 'add_course':
                 return True
@@ -19,11 +24,17 @@ class CanAddCourse(BasePermission):
     
 
 class CanChangeCourse(BasePermission):
+
+    # Permisos para Cursos
     def has_permission(self, request, view):
         
-        course = Course.objects.get(id=view.kwargs["pk"])
+        # Obtiene los permisos del usuario
         permisos_usuario = request.user.user_permissions.all()
+        
+        # Obtiene el curso
+        course = Course.objects.get(id=view.kwargs["pk"])
 
+        # Verifica si el usuario es superusuario
         if request.user.is_superuser:
             return True
 
@@ -54,6 +65,8 @@ class CanDeleteCourse(BasePermission):
                 return True
 
         return False
+    
+# Permisos para Lecciones
     
 class CanAddLesson(BasePermission):
     def has_permission(self, request, view):
