@@ -8,7 +8,7 @@ from courses.models import Course
 
 # Create your models here.
 class Exam(models.Model):
-    """Modelo de definicion de Examene"""
+    """ Modelo de definicion de Examenes """
     # campo id
     id = models.UUIDField(primary_key=True, 
                           default=uuid.uuid4, 
@@ -23,11 +23,11 @@ class Exam(models.Model):
     # Curso al que pertenece el examen
     course = models.ForeignKey(Course, 
                                on_delete=models.CASCADE, 
-                               related_name='exams',
-                               null=False,
-                               blank=False,
+                               related_name='courses',
                                editable=False,
                                unique=False,
+                               null=False,
+                               blank=False,
                                verbose_name=_("Course"))
 
     # Numero de preguntas que tiene un examen

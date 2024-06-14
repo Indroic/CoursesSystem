@@ -43,7 +43,7 @@ class UserManager(BaseUserManager):
         """
         Crea un super usuario
         """
-        user = User(ci=ci, email=email, username=username, first_name=first_name, last_name=last_name, rol="admin")
+        user = User(ci=ci, email=email, username=username, first_name=first_name, last_name=last_name)
         
         user.is_superuser = True
 
