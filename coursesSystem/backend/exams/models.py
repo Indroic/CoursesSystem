@@ -24,7 +24,6 @@ class Exam(models.Model):
     course = models.ForeignKey(Course, 
                                on_delete=models.CASCADE, 
                                related_name='courses',
-                               editable=False,
                                unique=False,
                                null=False,
                                blank=False,
