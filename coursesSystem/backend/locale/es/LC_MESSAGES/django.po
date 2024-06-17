@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-13 23:11-0400\n"
+"POT-Creation-Date: 2024-06-17 16:46-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,8 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
-
-#: certificados/models.py:19 exams/models.py:36 exams/models.py:51
+#: certificados/models.py:19 exams/models.py:50 exams/models.py:72
 msgid "Exam"
 msgstr "Examen"
 
@@ -34,14 +33,14 @@ msgstr "Fecha"
 
 #: certificados/models.py:30 certificados/models.py:48
 msgid "Exam Realized"
-msgstr "Examen Realizado"
+msgstr "Examen realizado"
 
 #: certificados/models.py:31
 msgid "Exams Realized"
-msgstr "Examenes Realizados"
+msgstr "Exámenes Realizados"
 
-#: certificados/models.py:52 courses/models.py:104 courses/models.py:147
-#: exams/models.py:23
+#: certificados/models.py:52 courses/models.py:107 courses/models.py:153
+#: exams/models.py:30
 msgid "Course"
 msgstr "Curso"
 
@@ -61,7 +60,7 @@ msgstr "Español"
 msgid "English"
 msgstr "Inglés"
 
-#: courses/admin.py:11 courses/admin.py:21
+#: courses/admin.py:19 courses/admin.py:62
 msgid "Details"
 msgstr "Detalles"
 
@@ -97,83 +96,103 @@ msgstr "Nivel del Curso"
 msgid "Uploaded by"
 msgstr "Subido por"
 
-#: courses/models.py:87 courses/models.py:154
+#: courses/models.py:87 courses/models.py:221
 msgid "Miniature"
 msgstr "Miniatura"
 
 #: courses/models.py:92
-msgid "Number of Lessons"
-msgstr "Número de Lecciones"
+msgid "Number of Modules"
+msgstr "Número de Módulos"
 
-#: courses/models.py:96 courses/models.py:164
+#: courses/models.py:96 courses/models.py:162 courses/models.py:231
 msgid "Created at"
 msgstr "Creado el"
 
-#: courses/models.py:100 courses/models.py:168
+#: courses/models.py:100 courses/models.py:166 courses/models.py:235
 msgid "Updated at"
 msgstr "Actualizado el"
 
-#: courses/models.py:105
+#: courses/models.py:110
 msgid "Courses"
 msgstr "Cursos"
 
-#: courses/models.py:134 exams/models.py:18
+#: courses/models.py:140
+msgid "Name of Module"
+msgstr "Nombre del Módulo"
+
+#: courses/models.py:147
+msgid "Module Description"
+msgstr "Descripción del Módulo"
+
+#: courses/models.py:158
+msgid "Number of Lessons"
+msgstr "Número de Lecciones"
+
+#: courses/models.py:172 courses/models.py:214
+msgid "Module"
+msgstr "Módulo"
+
+#: courses/models.py:175
+msgid "Modules"
+msgstr "Módulos"
+
+#: courses/models.py:201 exams/models.py:21
 msgid "Title"
 msgstr "Título"
 
-#: courses/models.py:141
+#: courses/models.py:208
 msgid "Description"
 msgstr "Descripción"
 
-#: courses/models.py:160
+#: courses/models.py:227
 msgid "Video"
-msgstr "Vídeo"
+msgstr "Video"
 
-#: courses/models.py:171
+#: courses/models.py:241
 msgid "Lesson"
 msgstr "Lección"
 
-#: courses/models.py:172
+#: courses/models.py:244
 msgid "Lessons"
-msgstr "Lecciónes"
+msgstr "Lecciones"
 
-#: exams/apps.py:7 exams/models.py:37
+#: exams/apps.py:7 exams/models.py:53
 msgid "Exams"
 msgstr "Exámenes"
 
-#: exams/models.py:27
+#: exams/models.py:35
 msgid "Number of Questions"
 msgstr "Número de Preguntas"
 
-#: exams/models.py:30 exams/models.py:57 exams/models.py:93
+#: exams/models.py:39 exams/models.py:80 exams/models.py:142
 msgid "Created At"
 msgstr "Creado el"
 
-#: exams/models.py:33 exams/models.py:60 exams/models.py:95
+#: exams/models.py:43 exams/models.py:84 exams/models.py:146
 msgid "Updated At"
 msgstr "Actualizado el"
 
-#: exams/models.py:54 exams/models.py:63 exams/models.py:84
+#: exams/models.py:76 exams/models.py:91 exams/models.py:130
 msgid "Question"
 msgstr "Pregunta"
 
-#: exams/models.py:64
+#: exams/models.py:94
 msgid "Questions"
 msgstr "Preguntas"
 
-#: exams/models.py:87
+#: exams/models.py:134
 msgid "Content"
 msgstr "Contenido"
 
-#: exams/models.py:90
+#: exams/models.py:138
 msgid "Is Correct"
 msgstr "Es Correcto"
 
-#: exams/models.py:98
+#: exams/models.py:152
 msgid "Option"
 msgstr "Opcion"
 
-#: exams/models.py:99
+#: exams/models.py:155
 msgid "Options"
 msgstr "Opciones"
 
@@ -191,11 +210,11 @@ msgstr "Usuarios"
 
 #: users/models.py:78
 msgid "Email address"
-msgstr "Dirección de correo"
+msgstr "Correo Electrónico"
 
 #: users/models.py:92
 msgid "First Name"
-msgstr "Nombre"
+msgstr "Primer Nombre"
 
 #: users/models.py:99
 msgid "Last Name"
@@ -207,28 +226,24 @@ msgstr "Contraseña"
 
 #: users/models.py:113
 msgid "Avatar"
-msgstr "Avatar"
+msgstr "Acatar"
 
 #: users/views.py:28
 msgid "User Registered successfully"
-msgstr "Usuario registrado correctamente"
+msgstr "Usuario Registrado correctamente"
 
 #: users/views.py:33
 msgid "nothing here :)"
-msgstr "Nada aquí :)"
+msgstr "Nada Aqui :)"
 
 #: users/views.py:36
-#, fuzzy
-#| msgid "you are bothering people, really 7-7"
 msgid "you are bothersome people, really 7-7"
-msgstr "Estás molestando a la gente, realmente 7-7"
+msgstr "Eres una persona fastidiosa, verdaderamente 7-7"
 
 #: users/views.py:39
-#, fuzzy
-#| msgid "you are very bothering people, really 7-7"
 msgid "you are very bothersome people, really 7-7"
-msgstr "Estás molestando mucho a la gente, realmente 7-7"
+msgstr "Eres una persona muy fastidiosa, verdaderamente 7-7"
 
 #: users/views.py:45
 msgid "do not continue with your attempts >:v"
-msgstr "No continúes con tus intentos >:v"
+msgstr "No continues con tus intentos >:v"
