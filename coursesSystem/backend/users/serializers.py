@@ -27,7 +27,7 @@ class RegisterSerializer(serializers.Serializer):
     last_name = serializers.CharField(max_length=150)
 
     # campo de avatar
-    avatar = serializers.ImageField()
+    avatar = serializers.ImageField(required=False)
 
     # campo de contraseña
     password = serializers.CharField(

@@ -12,15 +12,10 @@ import {
 } from "@nextui-org/react";
 import NextLink from "next/link";
 import { useState } from "react";
+
 export const Navbar = () => {
-  let username;
   const [isMenuOpen, isMenuOpenChange] = useState(false);
-  try
-  {
-    username = localStorage.getItem("username");
-  } catch (e) {
-    console.log(e);
-  }
+  const username = "probando";
   const items = [
     { label: "Mis Cursos", href: "/courses/my-courses" },
     { label: "Cursos", href: "/courses" },
@@ -32,12 +27,14 @@ export const Navbar = () => {
       onMenuOpenChange={isMenuOpenChange}
       maxWidth="xl"
       position="sticky"
+      isBordered
+      className=" top-4"
     >
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
         className="sm:hidden"
       />
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+      <NavbarContent className="basis-1/4 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="gap-3 max-w-fit">
           <NextLink className="flex justify-start items-center gap-1" href="/">
             <p className="font-bold text-inherit">ACME</p>
@@ -55,8 +52,10 @@ export const Navbar = () => {
             </Link>
           </NavbarItem>
         ))}
+        <NavbarItem>
+          <Avatar className="max-h-8 max-w-8" name={username} />
+        </NavbarItem>
       </NavbarContent>
-      <Avatar name="John Doe" />
       <NavbarMenu>
         {items.map((item, index) => (
           <NavbarMenuItem key={index}>
@@ -65,6 +64,9 @@ export const Navbar = () => {
             </Link>
           </NavbarMenuItem>
         ))}
+        <NavbarMenuItem className="mt-4">
+          <Avatar className="max-h-8 max-w-8" name={username} />
+        </NavbarMenuItem>
       </NavbarMenu>
     </NextUINavbar>
   );

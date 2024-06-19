@@ -1,3 +1,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.wave{
+    position: absolute;
+    background-image: url("/wave.svg");
+    background-repeat: none;
+    height: 100dvh;
+    width: 10dvh;
+    
+}

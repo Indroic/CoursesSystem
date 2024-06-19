@@ -107,8 +107,8 @@ class User(AbstractUser):
 
     # campo de imagen de perfil del usuario
     avatar = models.ImageField(upload_to=generar_nombre, 
-                               blank=False, 
-                               null=False, 
+                               blank=True, 
+                               null=True, 
                                default="avatars/default.jpg",
                                verbose_name=_('Avatar'))
     
