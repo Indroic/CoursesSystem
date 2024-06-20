@@ -9,12 +9,30 @@ from rest_framework_simplejwt.views import TokenVerifyView
 
 from .models import User
 from .serializers import UserSerializer, RegisterSerializer
+from .permissions import isUser
 
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated, IsAdminUser]
+    
+    # Permisos para este endpoint
+    def get_permissions(self):
+        permission_classes = [IsAuthenticated]
+
+        if self.action == 'create':
+            permission_classes.append(IsAdminUser)
+        
+        if self.action == 'list':
+            permission_classes.append(IsAdminUser)
+        
+        if self.action == 'update' or self.action == 'partial_update':
+            permission_classes.append(IsAdminUser)
+        
+        if self.action == 'retrieve':
+            permission_classes.append(isUser)
+        
+        return [permission() for permission in permission_classes]
 
 # Clase encargada de registrar un nuevo usuario
 class RegisterViewSet(viewsets.ViewSet):
@@ -62,5 +80,6 @@ class TokenVerifyView(TokenVerifyView):
             permisos.append("{}.{}".format(permiso.content_type.app_label, permiso.codename) )
 
         funcion_principal.data["user_permissions"] = permisos
+        funcion_principal.data["user_id"] = str(user.id)
 
         return funcion_principal
