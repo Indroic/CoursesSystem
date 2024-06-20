@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
-
-import { LoginRequest } from "@/config/axios_auth";
+import { signIn } from "next-auth/react";
 
 const useLoginForm = () => {
   const [formData, setFormData] = useState({
@@ -111,7 +110,8 @@ const useLoginForm = () => {
       return;
     }
 
-    const request = await LoginRequest({
+    const request = await signIn("credentials", {
+      redirect: false,
       username: formData.username,
       password: formData.password,
     });

@@ -3,7 +3,8 @@
 import { Button, Input, Link } from "@nextui-org/react";
 import Image from "next/image";
 
-import useLoginForm from "@/hooks/loginHooks";
+import useLoginForm from "@/hooks/loginHook";
+import { redirectCourses } from "@/config/redirectActions";
 
 export default function Login() {
   const {
@@ -11,48 +12,38 @@ export default function Login() {
     password,
     isInvalid,
     errorMessage,
-    setErrorMessage,
-    setIsInvalid,
     handleChange,
     handleSubmit,
+    setErrorMessage,
+    setIsInvalid,
   } = useLoginForm();
 
-  const login = async () => {
-    try {
-      const request = await handleSubmit();
+  const onHandleSubmit = async (e: any) => {
+    //eslint-disable-line
+    const request = await handleSubmit();
 
-      sessionStorage.setItem("token", request.access);
-      sessionStorage.setItem("refresh", request.refresh);
-      setErrorMessage((prevState) => ({
-        ...prevState,
-        username: "",
-        password: "",
-      }));
-      setIsInvalid((prevState) => ({
-        ...prevState,
-        username: false,
-        password: false,
-      }));
-    } catch (error: any) {
-      if (error.response.status === 401) {
-        setErrorMessage((prevState) => ({
-          ...prevState,
-          username: "Usuario o Contraseña Inválidos",
-          password: "Usuario o Contraseña Inválidos",
-        }));
-        setIsInvalid((prevState) => ({
-          ...prevState,
-          username: true,
-          password: true,
-        }));
-      }
+    if (request?.error) {
+      console.log(request);
+      setErrorMessage({
+        username: "Usuario o Contraseña Inválidos",
+        password: "Usuario o Contraseña Inválidos",
+      });
+      setIsInvalid({
+        username: true,
+        password: true,
+      });
 
       return;
     }
+    if (request?.ok) {
+      return redirectCourses();
+    }
+
+    return;
   };
 
   return (
-    <form action={login} className="absolute w-full px-4">
+    <form action={onHandleSubmit} className="absolute w-full px-4">
       <section className="grid gap-2 relative">
         <Image
           alt="chico en laptop"

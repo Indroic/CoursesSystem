@@ -20,7 +20,6 @@ pnpm-debug.log*
 *.mp4
 
 # environment variables
-.env
 .env.production
 
 # macOS-specific files

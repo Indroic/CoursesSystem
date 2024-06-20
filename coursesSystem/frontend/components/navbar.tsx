@@ -8,27 +8,33 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Avatar,
 } from "@nextui-org/react";
 import NextLink from "next/link";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+
+import DropDownAvatar from "./DropDownAvatar";
+
+ import { GetUserRequest } from "@/config/axios_auth";
 
 export const Navbar = () => {
   const [isMenuOpen, isMenuOpenChange] = useState(false);
-  const username = "probando";
+  const { data: session } = useSession();
   const items = [
     { label: "Mis Cursos", href: "/courses/my-courses" },
     { label: "Cursos", href: "/courses" },
     { label: "Inicio", href: "/" },
   ];
 
+
   return (
     <NextUINavbar
-      onMenuOpenChange={isMenuOpenChange}
+      onMenuOpenChange={isMenuOpenChange} // eslint-disable-line
       maxWidth="xl"
       position="sticky"
       isBordered
-      className=" top-4"
+      isBlurred={false}
+      className="bg-transparent text-white"
     >
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
@@ -47,13 +53,13 @@ export const Navbar = () => {
       >
         {items.map((item, index) => (
           <NavbarItem key={index}>
-            <Link color="foreground" href={item.href}>
-              {item.label}
+            <Link href={item.href}>
+              <span className="text-white">{item.label}</span>
             </Link>
           </NavbarItem>
         ))}
-        <NavbarItem>
-          <Avatar className="max-h-8 max-w-8" name={username} />
+        <NavbarItem className="flex flex-row gap-2 justify-center items-center">
+          <Avatar src={""} alt=""/>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
@@ -65,7 +71,7 @@ export const Navbar = () => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem className="mt-4">
-          <Avatar className="max-h-8 max-w-8" name={username} />
+          <Avatar src={""} alt=""/>
         </NavbarMenuItem>
       </NavbarMenu>
     </NextUINavbar>

@@ -1,28 +1,52 @@
 import axios from "axios";
 
-import { base_get_token, base_ip, base_register } from "./constands";
+import { base_url, url_login, url_verify_token, url_get_user } from "./constands";
 
-const auth_axios_instance = axios.create({
-  baseURL: base_ip,
+const axiosRequest = axios.create({
+  baseURL: base_url,
   headers: { "Content-Type": "application/json" },
 });
 
-const RegisterRequest = async (data: any) => {
-  const response = await auth_axios_instance.post(
-    base_ip + base_register,
-    data,
-  );
+const axiosRequestWithAuth = (token: string) => {
+  return axios.create({
+    baseURL: base_url,
+    headers: { 
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`
+    },
+  });
+}
 
-  return response.data;
+const LoginRequest = async (username: string, password: string) => {
+  const request = await axiosRequest.post(url_login, {
+    username: username,
+    password: password,
+  });
+
+  return request;
 };
 
-const LoginRequest = async (data: any) => {
-  const response = await auth_axios_instance.post(
-    base_ip + base_get_token,
-    data,
-  );
+const RefreshTokenRequest = async (token: string, username: string) => {
+  const request = await axiosRequest.post(url_verify_token, {
+    token: token,
+    username: username,
+  });
 
-  return response.data;
+  return request;
 };
 
-export { auth_axios_instance, LoginRequest, RegisterRequest };
+const VerifyRequest = async (username: string, token: string) => {
+  const request = await axiosRequest.post(url_verify_token, {
+    username: username,
+    token: token,
+  });
+
+  return request;
+};
+
+const GetUserRequest = async (token: string, ID: string) => {
+  const request = await axiosRequestWithAuth(token).get(url_get_user + ID);
+  return request;
+};
+
+export { axiosRequest, LoginRequest, VerifyRequest, RefreshTokenRequest,  GetUserRequest};

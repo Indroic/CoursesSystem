@@ -1,26 +1,29 @@
-const base_ip = "http://127.0.0.1:8000/";
+const base_url = "http://127.0.0.1:8000/api";
 
-const base_get_token = "token/";
+const url_login = "token/";
 
-const base_refresh_token = "token/refresh/";
+const url_refresh = "token/refresh/";
 
-const base_register = "api/register/";
+const url_register_user = "register/";
 
-const base_media = "/media/";
+const url_media = "media/";
 
-const base_token_verify = "api/token/verify/";
+const url_verify_token = "token/verify/";
 
-const base_courses = "api/courses/";
+const url_courses = "courses/";
 
-const base_lessons = "api/lessons/";
+const url_lessons = "lessons/";
+
+const url_get_user = "users/";
 
 export {
-  base_ip,
-  base_media,
-  base_courses,
-  base_lessons,
-  base_get_token,
-  base_refresh_token,
-  base_register,
-  base_token_verify,
+  base_url,
+  url_media,
+  url_courses,
+  url_lessons,
+  url_refresh,
+  url_register_user,
+  url_verify_token,
+  url_login,
+  url_get_user,
 };
