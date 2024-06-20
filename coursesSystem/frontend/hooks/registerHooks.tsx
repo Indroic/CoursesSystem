@@ -218,7 +218,7 @@ const useRegisterForm = () => {
         ...prevState,
         repeatPassword: "Las contraseñas no coinciden.",
       }));
-      
+
       setIsInvalid((prevState) => ({
         ...prevState,
         repeatPassword: true,
@@ -284,7 +284,7 @@ const useRegisterForm = () => {
       return false;
     }
 
-    if (fieldName === "repeatPassword" && !isInvalidRepeatPassword(fieldValue)) {
+    if (fieldName === "repeatPassword" && !isInvalidRepeatPassword(fieldValue)) { // eslint-disable-line
       return false;
     }
 
@@ -299,14 +299,14 @@ const useRegisterForm = () => {
       return;
     }
 
-    const request = await RegisterRequest({
-      first_name: formData.name,
-      last_name: formData.lastName,
-      username: formData.username,
-      ci: formData.ci,
-      email: formData.email,
-      password: formData.password,
-    });
+    const request = await RegisterRequest(
+      formData.name,
+      formData.lastName,
+      formData.username,
+      formData.ci,
+      formData.email,
+      formData.password,
+    );
 
     return request;
   };

@@ -4,7 +4,8 @@ import {
   base_url,
   url_login,
   url_verify_token,
-  url_get_user
+  url_get_user,
+  url_register_user,
 } from "./constands";
 
 const axiosRequest = axios.create({
@@ -17,7 +18,7 @@ const axiosRequestWithAuth = (token: string) => {
     baseURL: base_url,
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}` //eslint-disable-line
+      Authorization: `Bearer ${token}`, //eslint-disable-line
     },
   });
 };
@@ -25,6 +26,26 @@ const axiosRequestWithAuth = (token: string) => {
 const LoginRequest = async (username: string, password: string) => {
   const request = await axiosRequest.post(url_login, {
     username: username,
+    password: password,
+  });
+
+  return request;
+};
+
+const RegisterRequest = async (
+  first_name: string,
+  last_name: string,
+  username: string,
+  ci: string,
+  email: string,
+  password: string,
+) => {
+  const request = await axiosRequest.post(url_register_user, {
+    first_name: first_name,
+    last_name: last_name,
+    username: username,
+    ci: ci,
+    email: email,
     password: password,
   });
 
@@ -58,6 +79,7 @@ const GetUserRequest = async (token: string, ID: string) => {
 export {
   axiosRequest,
   LoginRequest,
+  RegisterRequest,
   VerifyRequest,
   RefreshTokenRequest,
   GetUserRequest,
