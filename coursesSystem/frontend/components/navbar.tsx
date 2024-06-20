@@ -11,15 +11,10 @@ import {
 } from "@nextui-org/react";
 import NextLink from "next/link";
 import { useState } from "react";
-import { useSession } from "next-auth/react";
-
 import DropDownAvatar from "./DropDownAvatar";
-
- import { GetUserRequest } from "@/config/axios_auth";
 
 export const Navbar = () => {
   const [isMenuOpen, isMenuOpenChange] = useState(false);
-  const { data: session } = useSession();
   const items = [
     { label: "Mis Cursos", href: "/courses/my-courses" },
     { label: "Cursos", href: "/courses" },
@@ -59,7 +54,7 @@ export const Navbar = () => {
           </NavbarItem>
         ))}
         <NavbarItem className="flex flex-row gap-2 justify-center items-center">
-          <Avatar src={""} alt=""/>
+        <DropDownAvatar/>
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
@@ -71,7 +66,7 @@ export const Navbar = () => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem className="mt-4">
-          <Avatar src={""} alt=""/>
+          <DropDownAvatar/>
         </NavbarMenuItem>
       </NavbarMenu>
     </NextUINavbar>

@@ -1,6 +1,11 @@
 import axios from "axios";
 
-import { base_url, url_login, url_verify_token, url_get_user } from "./constands";
+import {
+  base_url,
+  url_login,
+  url_verify_token,
+  url_get_user
+} from "./constands";
 
 const axiosRequest = axios.create({
   baseURL: base_url,
@@ -10,12 +15,12 @@ const axiosRequest = axios.create({
 const axiosRequestWithAuth = (token: string) => {
   return axios.create({
     baseURL: base_url,
-    headers: { 
+    headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`
+      "Authorization": `Bearer ${token}` //eslint-disable-line
     },
   });
-}
+};
 
 const LoginRequest = async (username: string, password: string) => {
   const request = await axiosRequest.post(url_login, {
@@ -46,7 +51,14 @@ const VerifyRequest = async (username: string, token: string) => {
 
 const GetUserRequest = async (token: string, ID: string) => {
   const request = await axiosRequestWithAuth(token).get(url_get_user + ID);
+
   return request;
 };
 
-export { axiosRequest, LoginRequest, VerifyRequest, RefreshTokenRequest,  GetUserRequest};
+export {
+  axiosRequest,
+  LoginRequest,
+  VerifyRequest,
+  RefreshTokenRequest,
+  GetUserRequest,
+};

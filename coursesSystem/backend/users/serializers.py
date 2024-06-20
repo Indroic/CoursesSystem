@@ -60,3 +60,9 @@ class RegisterSerializer(serializers.Serializer):
     # Crea un nuevo usuario con los datos validados
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
+
+
+class TokenVerifySerializer(serializers.Serializer):
+    token = serializers.CharField(max_length=1000)
+
+    username = serializers.CharField(max_length=100)
