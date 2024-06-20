@@ -12,7 +12,7 @@ export default function Avatar() {
   }
 
   return (
-    <div className="flex flex-row gap-3">
+    <div className="flex flex-row gap-3 justify-center items-center">
       <NextUIAvatar name={session?.user?.name} src={session?.user?.picture} />
       <span className="font-bold text-white">{session?.user?.name}</span>
     </div>
