@@ -8,7 +8,7 @@ from rest_framework import viewsets, status
 from rest_framework_simplejwt.views import TokenVerifyView
 
 from .models import User
-from .serializers import UserSerializer, RegisterSerializer
+from .serializers import UserSerializer, RegisterSerializer, TokenVerifySerializer
 from .permissions import isUser
 
 
@@ -67,19 +67,23 @@ class RegisterViewSet(viewsets.ViewSet):
 class TokenVerifyView(TokenVerifyView):
 
     def post(self, request, *args, **kwargs):
-        user = User.objects.get(username=request.data["username"])
+        serialize_data = TokenVerifySerializer(data=request.data)
+        if serialize_data.is_valid():
+            user = User.objects.get(username=serialize_data.data["username"])
 
-        funcion_principal = super().post(request, *args, **kwargs)
+            funcion_principal = super().post(request, *args, **kwargs)
 
-        permisos = []
-        
-        for permiso in Permission.objects.filter(group__user=user):
-            permisos.append("{}.{}".format(permiso.content_type.app_label, permiso.codename))
-        
-        for permiso in Permission.objects.filter(user=user):
-            permisos.append("{}.{}".format(permiso.content_type.app_label, permiso.codename) )
+            permisos = []
+            
+            for permiso in Permission.objects.filter(group__user=user):
+                permisos.append("{}.{}".format(permiso.content_type.app_label, permiso.codename))
+            
+            for permiso in Permission.objects.filter(user=user):
+                permisos.append("{}.{}".format(permiso.content_type.app_label, permiso.codename) )
 
-        funcion_principal.data["user_permissions"] = permisos
-        funcion_principal.data["user_id"] = str(user.id)
+            funcion_principal.data["user_permissions"] = permisos
+            funcion_principal.data["user_id"] = str(user.id)
 
-        return funcion_principal
+            return funcion_principal
+
+        return Response(serialize_data.errors, status=status.HTTP_400_BAD_REQUEST)

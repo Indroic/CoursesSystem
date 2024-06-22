@@ -1,15 +1,12 @@
-"use client";
-
 import {
   Button,
-  Spinner,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
 } from "@nextui-org/react";
 
-
+import { signOut } from "next-auth/react";
 
 import Avatar from "./Avatar";
 
