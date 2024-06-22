@@ -3,11 +3,11 @@
 import { redirect } from "next/navigation";
 
 const redirectlogin = async () => {
-  return await redirect("/courses");
+  return await redirect("/auth/login");
 };
 
 const redirectCourses = async () => {
-  return await redirect("/courses");
+  return await redirect("/home/courses");
 };
 
 export { redirectlogin, redirectCourses };

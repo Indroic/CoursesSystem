@@ -61,9 +61,9 @@ const RefreshTokenRequest = async (token: string, username: string) => {
   return request;
 };
 
-const VerifyRequest = async (username: string, token: string) => {
+const VerifyRequest = async (name: string, token: string) => {
   const request = await axiosRequest.post(url_verify_token, {
-    username: username,
+    username: name,
     token: token,
   });
 

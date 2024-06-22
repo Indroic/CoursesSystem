@@ -7,7 +7,8 @@ import {
   RefreshTokenRequest,
   GetUserRequest,
 } from "@/config/axios_auth";
-import { User } from "@nextui-org/react";
+
+import { cookies } from "next/headers";
 
 interface CustomUser extends User {
   id: string;
@@ -19,8 +20,9 @@ const Auth = async (credentials: any) => {
   try {
     // Realiza una solicitud de inicio de sesión con las credenciales proporcionadas
     const res = await LoginRequest(credentials.username, credentials.password);
-
+    const cookieStore = cookies();
     // Verifica la respuesta de la solicitud de inicio de sesión
+
     if (res.status === 200) {
       // Si la solicitud de inicio de sesión es exitosa, realiza la verificación
       const verify = await VerifyRequest(credentials.username, res.data.access);
@@ -29,6 +31,9 @@ const Auth = async (credentials: any) => {
       if (verify.status === 200) {
         // Si la verificación es exitosa, obtén los datos del usuario
         const user = await GetUserRequest(res.data.access, verify.data.user_id);
+
+        cookieStore.delete("permissions");
+        cookieStore.set("permissions", verify.data.user_permissions);
 
         // Verifica la respuesta de la solicitud de datos del usuario
         if (user.status === 200) {
@@ -54,12 +59,12 @@ const Auth = async (credentials: any) => {
       return null;
     } else {
       // Si la solicitud de inicio de sesión falla, lanza un error con el mensaje de error
-      return new Error(res.data);
+      return null;
     }
   } catch (error) {
     // Captura cualquier error que pueda ocurrir durante el proceso y maneja el error adecuadamente
     // Puedes agregar aquí la lógica para manejar el error de manera específica
-    return error;
+    return null;
   }
 };
 
@@ -96,7 +101,10 @@ const handler = NextAuth({
     },
     async jwt({ token, account, user }) {
       if (account) {
-        const accessToken = await RefreshTokenRequest(account.refresh_token, user.name);
+        const accessToken = await RefreshTokenRequest(
+          account.refresh_token,
+          user.name,
+        );
         token.refreshToken = account.access_token;
         token.accessToken = accessToken.data.refresh;
       }

@@ -73,17 +73,10 @@ class TokenVerifyView(TokenVerifyView):
 
             funcion_principal = super().post(request, *args, **kwargs)
 
-            permisos = []
-            
-            for permiso in Permission.objects.filter(group__user=user):
-                permisos.append("{}.{}".format(permiso.content_type.app_label, permiso.codename))
-            
-            for permiso in Permission.objects.filter(user=user):
-                permisos.append("{}.{}".format(permiso.content_type.app_label, permiso.codename) )
-
-            funcion_principal.data["user_permissions"] = permisos
+            funcion_principal.data["user_permissions"] = user.get_all_permissions()
             funcion_principal.data["user_id"] = str(user.id)
 
             return funcion_principal
+        
 
-        return Response(serialize_data.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serialize_data.error_messages, status=status.HTTP_400_BAD_REQUEST)

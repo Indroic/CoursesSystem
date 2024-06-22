@@ -11,6 +11,8 @@ import {
 } from "@nextui-org/react";
 import NextLink from "next/link";
 import { useState } from "react";
+import { signOut } from "next-auth/react";
+
 import DropDownAvatar from "./DropDownAvatar";
 
 export const Navbar = () => {
@@ -20,7 +22,6 @@ export const Navbar = () => {
     { label: "Cursos", href: "/courses" },
     { label: "Inicio", href: "/" },
   ];
-
 
   return (
     <NextUINavbar
@@ -42,9 +43,10 @@ export const Navbar = () => {
           </NextLink>
         </NavbarBrand>
       </NavbarContent>
+
       <NavbarContent
         className="hidden sm:flex basis-1/5 gap-6 sm:basis-full"
-        justify="end"
+        justify="center"
       >
         {items.map((item, index) => (
           <NavbarItem key={index}>
@@ -54,9 +56,14 @@ export const Navbar = () => {
           </NavbarItem>
         ))}
         <NavbarItem className="flex flex-row gap-2 justify-center items-center">
-        <DropDownAvatar/>
         </NavbarItem>
       </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <DropDownAvatar />
+        </NavbarItem>
+      </NavbarContent>
+
       <NavbarMenu>
         {items.map((item, index) => (
           <NavbarMenuItem key={index}>
@@ -66,7 +73,9 @@ export const Navbar = () => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem className="mt-4">
-          <DropDownAvatar/>
+          <NavbarItem onClick={() => signOut()} className="text-danger" as={"button"}>
+            Cerrar Sesion
+          </NavbarItem>
         </NavbarMenuItem>
       </NavbarMenu>
     </NextUINavbar>

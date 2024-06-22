@@ -15,23 +15,21 @@ export default function DropDownAvatar() {
 
 
   return (
-    <>
-      <Dropdown>
-        <DropdownTrigger>
-          <Button className="bg-transparent">
-            <Avatar/>
-          </Button>
-        </DropdownTrigger>
-        <DropdownMenu>
-          <DropdownItem
-            color="danger"
-            className="text-danger"
-            onClick={() => signOut()}
-          >
-            Cerrar Sesión
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
-    </>
+    <Dropdown>
+      <DropdownTrigger>
+        <Button className="p-0 m-0 bg-transparent">
+          <Avatar />
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu>
+        <DropdownItem
+          color="danger"
+          className="text-danger"
+          onClick={() => signOut()}
+        >
+          Cerrar Sesión
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   );
 }
