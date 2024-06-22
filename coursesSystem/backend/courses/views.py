@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import filters
 
 
 from .models import Course, Module, Lesson
@@ -22,12 +24,12 @@ from .permissions import (CanAddCourse,
 class CourseViewSet(ModelViewSet):
     """ Endpoint para ver, crear, actualizar y borrar cursos """
     
-    
     queryset = Course.objects.all()
 
     # Serializador
     serializer_class = CourseSerializer
 
+    search_fields = ["id", "name", "uploaded_by__username", "=level"]
 
     # Permisos
     def get_permissions(self, *args, **kwargs):
@@ -61,6 +63,8 @@ class ModuleViewSet(ModelViewSet):
 
     # Serializador
     serializer_class = ModuleSerializer
+
+    search_fields = ["id", "name", "course__name", "course__uploaded_by__username"]
 
 
     # Crea un modulo
@@ -115,6 +119,8 @@ class LessonViewSet(ModelViewSet):
 
     # Serializador
     serializer_class = LessonSerializer
+
+    search_fields = ["id", "title", "module__title", "module__course", "module__id","module__course__title", "module__course__uploaded_by__username"]
 
 
     # Crea una leccion

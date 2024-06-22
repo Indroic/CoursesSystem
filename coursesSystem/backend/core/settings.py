@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     # modulos de terceros
     'rest_framework',
     'rest_framework_simplejwt',
-    "corsheaders",
+    'corsheaders',
 
     # apps
     'users',
@@ -200,4 +200,5 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_FILTER_BACKENDS': ['rest_framework.filters.SearchFilter'],
 }

@@ -17,6 +17,8 @@ class CertificateViewSet(ModelViewSet):
     # Permisos
     permission_classes = [IsAuthenticated]
 
+    search_fields = ['user__username', 'name', 'description']
+
 
 
 class ExamRealizedViewSet(ModelViewSet):
@@ -30,5 +32,7 @@ class ExamRealizedViewSet(ModelViewSet):
 
     # Permisos
     permission_classes = [IsAuthenticated]
+
+    search_fields = ['user__username', 'name', 'description']
 
     

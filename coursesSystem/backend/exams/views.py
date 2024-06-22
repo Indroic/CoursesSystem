@@ -22,6 +22,8 @@ class ExamViewSet(ModelViewSet):
     # Queryset para Examenes
     queryset = Exam.objects.all()
 
+    search_fields = ['title', 'course__name', 'course__uploaded_by__username']
+
     # Permisos
     def get_permissions(self):
 
