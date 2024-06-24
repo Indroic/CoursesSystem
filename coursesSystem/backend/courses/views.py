@@ -64,7 +64,7 @@ class ModuleViewSet(ModelViewSet):
     # Serializador
     serializer_class = ModuleSerializer
 
-    search_fields = ["id", "name", "course__name", "course__uploaded_by__username"]
+    search_fields = ["id", "name", "course__name", "course__id","course__uploaded_by__username"]
 
 
     # Crea un modulo
@@ -93,6 +93,10 @@ class ModuleViewSet(ModelViewSet):
         permission_classes = [IsAuthenticated]
 
         # Condicion para agregar un permiso cuando se intente crear un modulo
+
+        if self.action == "list" or self.action == "retrieve":
+            permission_classes = []
+            
         if self.action == "create":
             permission_classes.append(CanAddModule)
 
@@ -120,7 +124,7 @@ class LessonViewSet(ModelViewSet):
     # Serializador
     serializer_class = LessonSerializer
 
-    search_fields = ["id", "title", "module__title", "module__course", "module__id","module__course__title", "module__course__uploaded_by__username"]
+    search_fields = ["id", "title", "module__name", "module__course__id",  "module__id"]
 
 
     # Crea una leccion
@@ -147,6 +151,9 @@ class LessonViewSet(ModelViewSet):
 
         # Permisos para modulos
         permission_classes = [IsAuthenticated]
+
+        if self.action == "list" or self.action == "retrieve":
+            permission_classes = []
 
         # Condicion para agregar un permiso cuando se intente crear un modulo
         if self.action == "create":

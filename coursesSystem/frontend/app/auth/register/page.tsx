@@ -58,7 +58,7 @@ export default function Register() {
           )}
         </ModalContent>
       </Modal>
-      <span className="font-extrabold text-6xl">Regístrate</span>
+      <span className="font-extrabold text-5xl">Regístrate</span>
       <section className="flex flex-col my-10 gap-5">
         <article className="flex flex-row gap-3">
           <Input
@@ -164,7 +164,7 @@ export default function Register() {
         </Button>
         <section className="flex flex-col gap-2 items-center justify-center">
           <span className=" text-foreground-400 text-bold">O</span>
-          <Link href="/login/">Inicia Sesión</Link>
+          <Link href="/auth/">Inicia Sesión</Link>
         </section>
       </section>
     </form>

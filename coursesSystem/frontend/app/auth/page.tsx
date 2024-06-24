@@ -47,7 +47,7 @@ export default function Login() {
       <section className="grid gap-2 relative">
         <Image
           alt="chico en laptop"
-          className="absolute right-0 bottom-0"
+          className="invisible md:visible absolute right-0 bottom-0"
           height={250}
           src="/guy.png"
           width={250}
@@ -97,7 +97,7 @@ export default function Login() {
         </Button>
         <section className="flex flex-col gap-10 items-center justify-center">
           <span className=" text-foreground-400 text-bold">O</span>
-          <Link href="/register/">Registrate</Link>
+          <Link href="/auth/register/">Registrate</Link>
         </section>
       </section>
     </form>

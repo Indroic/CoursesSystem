@@ -25,7 +25,7 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function CoursesLayout({
+export default function HomeLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -35,7 +35,7 @@ export default function CoursesLayout({
       <head />
       <body
         className={clsx(
-          "p-0 m-0  min-w-screen min-h-screen bg-gradient-to-r from-zinc-900 from-30% to-blue-950 font-sans ",
+          "p-0 m-0 h-[100dvh] w-[100dvw] bg-gradient-to-r from-zinc-900 from-30% to-blue-950 font-sans ",
           fontSans.variable,
         )}
       >

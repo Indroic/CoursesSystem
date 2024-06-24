@@ -7,7 +7,12 @@ const redirectlogin = async () => {
 };
 
 const redirectCourses = async () => {
-  return await redirect("/home/courses");
+  return await redirect("/home");
 };
 
-export { redirectlogin, redirectCourses };
+const redirectCourseInfo = async (id:string) => {
+  return await redirect(`/home/courses/${id}`);
+};
+
+
+export { redirectlogin, redirectCourses, redirectCourseInfo };

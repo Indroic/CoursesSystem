@@ -14,6 +14,8 @@ const url_courses = "courses/";
 
 const url_lessons = "lessons/";
 
+const url_modules = "modules/";
+
 const url_get_user = "users/";
 
 export {
@@ -26,4 +28,5 @@ export {
   url_verify_token,
   url_login,
   url_get_user,
+  url_modules
 };

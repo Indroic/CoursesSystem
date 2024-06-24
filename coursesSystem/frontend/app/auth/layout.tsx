@@ -7,7 +7,7 @@ export default function AuthLayout({
 }) {
   return (
     <div className="relative flex flex-col items-end justify-end">
-      <section className="gap-8 absolute left-0 text-white text-6xl font-extrabold px-10 py-20 min-h-screen max-h-screen">
+      <section className="h-[100dvh] invisible md:visible gap-8 absolute left-0 text-white text-6xl font-extrabold px-10 py-20">
         <p className=" max-w-[100dvh]">
           “ No te enfoques en los errores que tengas al aprender, deja atrás el
           pasado y camina hacia el futuro ”

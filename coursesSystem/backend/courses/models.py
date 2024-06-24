@@ -9,7 +9,7 @@ def generar_nombre_miniatura(instance, filename):
     extension = filename.split('.')[-1]
 
     # obtiene el nombre del curso
-    curso = instance.title
+    curso = instance.name
     
     # genera una cadena de caracteres para el nombre del archivo y elimina todos los "-" que tenga
     caracteres = str(uuid.uuid4()).replace('-', '')

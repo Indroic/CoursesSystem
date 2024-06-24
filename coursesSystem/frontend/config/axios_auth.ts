@@ -6,6 +6,9 @@ import {
   url_verify_token,
   url_get_user,
   url_register_user,
+  url_courses,
+  url_modules,
+  url_lessons,
 } from "./constands";
 
 const axiosRequest = axios.create({
@@ -38,7 +41,7 @@ const RegisterRequest = async (
   username: string,
   ci: string,
   email: string,
-  password: string,
+  password: string
 ) => {
   const request = await axiosRequest.post(url_register_user, {
     first_name: first_name,
@@ -76,6 +79,44 @@ const GetUserRequest = async (token: string, ID: string) => {
   return request;
 };
 
+const GetCoursesRequest = async (userID: string) => {
+  const url = userID ? `${url_courses}?search=${userID}` : url_courses;
+
+  const request = await axiosRequest.get(url);
+
+  return request;
+};
+
+const GetCourseRequest = async (id: string) => {
+  const request = await axiosRequest.get(url_courses + id);
+
+  return request;
+};
+
+const GetModulesRequest = async (course_id: string) => {
+  const request = await axiosRequest.get(url_modules + `?search=${course_id}`);
+
+  return request;
+};
+
+const GetLessonsRequest = async () => {
+  const request = await axiosRequest.get(url_lessons);
+
+  return request;
+};
+
+const GetLessonsOfModuleRequest = async (module_id: string) => {
+  const request = await axiosRequest.get(url_lessons + `?search=${module_id}`);
+
+  return request;
+};
+
+const GetModuleRequest = async (module_id: string) => {
+  const request = await axiosRequest.get(url_modules + `${module_id}`);
+
+  return request;
+};
+
 export {
   axiosRequest,
   LoginRequest,
@@ -83,4 +124,10 @@ export {
   VerifyRequest,
   RefreshTokenRequest,
   GetUserRequest,
+  GetCoursesRequest,
+  GetCourseRequest,
+  GetModulesRequest,
+  GetLessonsRequest,
+  GetModuleRequest,
+  GetLessonsOfModuleRequest,
 };

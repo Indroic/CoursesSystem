@@ -33,7 +33,9 @@ const Auth = async (credentials: any) => {
         const user = await GetUserRequest(res.data.access, verify.data.user_id);
 
         cookieStore.delete("permissions");
-        cookieStore.set("permissions", verify.data.user_permissions);
+        cookieStore.set("permissions", verify.data.user_permissions, {
+          maxAge: 60 * 60 * 24 * 30,
+        });
 
         // Verifica la respuesta de la solicitud de datos del usuario
         if (user.status === 200) {
@@ -42,6 +44,7 @@ const Auth = async (credentials: any) => {
             name: user.data.username,
             email: user.data.email,
             image: user.data.avatar,
+            picture: user.data.avatar,
             id: user.data.id,
             accessToken: res.data.access,
             refreshToken: res.data.refresh,
@@ -103,13 +106,13 @@ const handler = NextAuth({
       if (account) {
         const accessToken = await RefreshTokenRequest(
           account.refresh_token,
-          user.name,
+          user.name
         );
         token.refreshToken = account.access_token;
         token.accessToken = accessToken.data.refresh;
       }
 
-      return token;
+      return { ...token, ...user };
     },
     async session({ session, token, user }) {
       if (token) {

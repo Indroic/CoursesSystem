@@ -10,27 +10,54 @@ import {
   NavbarMenuItem,
 } from "@nextui-org/react";
 import NextLink from "next/link";
-import { useState } from "react";
+import { useEffect } from "react";
 import { signOut } from "next-auth/react";
+import { getCookie } from "cookies-next";
+import { memo } from "react";
+
+import useNavbar from "@/store/navbar";
 
 import DropDownAvatar from "./DropDownAvatar";
 
 export const Navbar = () => {
-  const [isMenuOpen, isMenuOpenChange] = useState(false);
-  const items = [
-    { label: "Mis Cursos", href: "/courses/my-courses" },
-    { label: "Cursos", href: "/courses" },
-    { label: "Inicio", href: "/" },
-  ];
+  const { isMenuOpen, items, toggleMenu, setItems, loaded, changeLoaded } =
+    useNavbar();
+
+  useEffect(() => {
+    const fetchPermissions = async () => {
+      if (getCookie("permissions") && !loaded) {
+        const permissions = (getCookie("permissions") as string).split(",");
+        const filteredItems = [
+          {
+            label: "Mis Cursos",
+            href: "/home/courses/my-courses",
+            permission: "courses.add_course",
+          },
+          {
+            label: "Cursos",
+            href: "/home/courses",
+            permission: "courses.view_course",
+          },
+          { label: "Inicio", href: "/" },
+        ].filter(
+          (item) => !item.permission || permissions.includes(item.permission)
+        );
+        setItems(filteredItems);
+        
+        changeLoaded();
+      }
+    };
+
+    fetchPermissions();
+  }, []);
 
   return (
     <NextUINavbar
-      onMenuOpenChange={isMenuOpenChange} // eslint-disable-line
+      onMenuOpenChange={toggleMenu} // eslint-disable-line
       maxWidth="xl"
       position="sticky"
       isBordered
-      isBlurred={false}
-      className="bg-transparent text-white"
+      className="dark bg-background/10 text-white"
     >
       <NavbarMenuToggle
         aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
@@ -55,8 +82,6 @@ export const Navbar = () => {
             </Link>
           </NavbarItem>
         ))}
-        <NavbarItem className="flex flex-row gap-2 justify-center items-center">
-        </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
@@ -64,7 +89,7 @@ export const Navbar = () => {
         </NavbarItem>
       </NavbarContent>
 
-      <NavbarMenu>
+      <NavbarMenu className="dark bg-background/10">
         {items.map((item, index) => (
           <NavbarMenuItem key={index}>
             <Link color="foreground" href={item.href}>
@@ -73,7 +98,11 @@ export const Navbar = () => {
           </NavbarMenuItem>
         ))}
         <NavbarMenuItem className="mt-4">
-          <NavbarItem onClick={() => signOut()} className="text-danger" as={"button"}>
+          <NavbarItem
+            onClick={() => signOut()}
+            className="text-danger"
+            as={"button"}
+          >
             Cerrar Sesion
           </NavbarItem>
         </NavbarMenuItem>
