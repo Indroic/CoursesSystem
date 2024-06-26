@@ -249,21 +249,6 @@ class Lesson(models.Model):
 
     # Funcion de eliminacion
     def delete(self, *args, **kwargs):
-        # Verifica que la miniatura no sea la por defecto
-        if self.miniature.path != settings.DEFAULT_MINIATURE:
-            try:
-                # Elimina la miniatura
-                os.remove(self.miniature.path)
-            except FileNotFoundError:
-                pass
-
-        try:
-            # Elimina el video
-            os.remove(self.video.path)
-        except Exception as e:
-            pass
-
-
         # Disminuye el numero de lecciones en el curso siempre y cuando el numero de lecciones sea mayor a 0
         if self.module.num_lessons > 0:
             self.module.num_lessons -= 1
