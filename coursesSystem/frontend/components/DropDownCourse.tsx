@@ -32,6 +32,8 @@ import useUpdateCourseForm from "@/hooks/UpdateCourseFormHook";
 import { DeleteCourse } from "@/config/axios_auth";
 import ModulesList from "./ModulesList";
 
+import useCourses from "@/store/courses";
+
 export default function DropdownCourse({
   course,
   accessToken,
@@ -56,6 +58,7 @@ export default function DropdownCourse({
     handleSubmit,
     handleChange,
   } = useUpdateCourseForm({ accessToken: accessToken, course });
+  const { deleteCourse } = useCourses();
   const onDrop = useCallback((acceptedFiles: any) => {}, []);
   const { getRootProps, getInputProps, isDragActive, acceptedFiles } =
     useDropzone({
@@ -75,7 +78,7 @@ export default function DropdownCourse({
           color="danger"
           onClick={() => {
             DeleteCourse(course.id, accessToken);
-            location.reload();
+            deleteCourse(course);
           }}
         >
           {" "}
