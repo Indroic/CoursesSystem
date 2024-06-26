@@ -203,6 +203,18 @@ const DeleteLesson = async (lessonID: string, accessToken: string) => {
   return request;
 }
 
+const UpdateLessonRequest = async (data: any, lessonID: string, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).patch(
+    `${url_lessons}${lessonID}/`,
+    data,{
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  )
+ return request
+}
+
 export {
   axiosRequest,
   LoginRequest,
@@ -223,5 +235,6 @@ export {
   CreateLessonRequest,
   UpdateModuleRequest,
   DeleteModule,
-  DeleteLesson
+  DeleteLesson,
+  UpdateLessonRequest
 };

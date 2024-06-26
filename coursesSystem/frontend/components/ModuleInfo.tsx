@@ -2,8 +2,6 @@
 
 import React, { useCallback, useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
-import { useDropzone } from "react-dropzone";
 import LessonsList from "./LessonsList";
 import {
   CreateLessonRequest,
@@ -39,45 +37,8 @@ import {
   DropdownTrigger,
   DropdownMenu,
 } from "@nextui-org/react";
-import { title } from "process";
 
-const useVideoDropZone = () => {
-  const onDrop = useCallback((acceptedFiles: any) => {}, []);
-  const dropzoneProps = useDropzone({
-    onDrop,
-    accept: {
-      "video/*": [".mkv", ".mp4"],
-    },
-    maxFiles: 1,
-  });
-
-  return {
-    getVideoRootProps: dropzoneProps.getRootProps,
-    getVideoInputProps: dropzoneProps.getInputProps,
-    isVideoDragActive: dropzoneProps.isDragActive,
-    acceptedVideoFiles: dropzoneProps.acceptedFiles,
-  };
-};
-
-const useImageDropZone = () => {
-  const onDrop = useCallback((acceptedFiles: any) => {}, []);
-  const dropzoneProps = useDropzone({
-    onDrop,
-    accept: {
-      "image/png": [".png"],
-      "image/jpeg": [".jpeg"],
-      "image/jpg": [".jpeg"],
-    },
-    maxFiles: 1,
-  });
-
-  return {
-    getImageRootProps: dropzoneProps.getRootProps,
-    getImageInputProps: dropzoneProps.getInputProps,
-    isImageDragActive: dropzoneProps.isDragActive,
-    acceptedImageFiles: dropzoneProps.acceptedFiles,
-  };
-};
+import { useVideoDropZone, useImageDropZone } from "@/hooks/DropZones";
 
 const ModuleInfo = ({
   module,
@@ -370,7 +331,7 @@ const ModuleInfo = ({
                 color="danger"
                 onClick={() => {
                   DeleteModule(module.id, accessToken); 
-                  onOpenParentChange(false);
+                  onOpenParentChange();
                 }}
               >
                 Eliminar Modulo

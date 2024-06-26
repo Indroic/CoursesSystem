@@ -90,7 +90,6 @@ const AddCourse = ({
           {(onClose) => (
             <form
               onSubmit={async (e) => {
-                e.preventDefault();
 
                 return await createCourse();
               }}
