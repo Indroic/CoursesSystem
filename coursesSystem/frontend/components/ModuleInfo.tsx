@@ -8,7 +8,7 @@ import {
   UpdateModuleRequest,
   DeleteModule,
 } from "@/config/axios_auth";
-import { ModuleInterface } from "@/types/courses";
+import { LessonInterface, ModuleInterface } from "@/types/courses";
 
 import {
   RiBookFill,
@@ -40,6 +40,9 @@ import {
 
 import { useVideoDropZone, useImageDropZone } from "@/hooks/DropZones";
 
+import useLessons from "@/store/lessons";
+import useModules from "@/store/modules";
+
 const ModuleInfo = ({
   module,
   accessToken,
@@ -50,6 +53,8 @@ const ModuleInfo = ({
   onOpenParentChange: () => void;
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {addLesson } = useLessons();
+  const { updateModule } = useModules();
   const [lessonsErrors, setLessonsErrors] = useState({
     title: "",
     description: "",
@@ -82,6 +87,10 @@ const ModuleInfo = ({
       );
       if (response.status === 201) {
         formikLesson.resetForm();
+        let lesson: LessonInterface = response.data;
+        module.num_lessons = module.num_lessons + 1;
+        updateModule(module)
+        addLesson(lesson);
         onOpenChange();
       }
     },
@@ -101,17 +110,24 @@ const ModuleInfo = ({
     },
   });
 
+  
   const createLesson = async () => {
     try {
       let response = await formikLesson.submitForm();
+
+      formikLesson.resetForm();
     } catch (e) {
-      let errors = e.response.data;
-      console.log(errors);
-      if (errors) {
-        Object.keys(errors).forEach((key) => {
-          console.log(key, errors[key][0]);
-          setLessonsErrors({ ...lessonsErrors, [key]: errors[key][0] });
-        });
+      try{
+        let errors = e.response.data;
+        console.log(errors);
+        if (errors) {
+          Object.keys(errors).forEach((key) => {
+            console.log(key, errors[key][0]);
+            setLessonsErrors({ ...lessonsErrors, [key]: errors[key][0] });
+          });
+        }
+      } catch(error){
+        console.log(error)
       }
     }
   };
@@ -312,9 +328,9 @@ const ModuleInfo = ({
         </ModalContent>
       </Modal>
 
-      <Card className="min-w-40 max-w-44 md:max-w-xs h-full min-h-36  gap-0 shadow-lg shadow-blue-500/50 hover:shadow-blue-500 transition-shadow">
+      <Card as={"div"} className="min-w-40 max-w-44 md:max-w-xs h-full min-h-36  gap-0 shadow-lg shadow-blue-500/50  dark:shadow-blue-900  transition-shadow">
         <CardHeader className="">
-          <span className="relative flex font-semibold text-xs md:text-sm w-[50%]">
+          <span className="relative flex flex-col font-semibold text-xs md:text-sm">
             Módulo: {module.name}
           </span>
           <Dropdown className="absolute top-0 right-0">

@@ -18,12 +18,15 @@ import {
 } from "@nextui-org/react";
 
 import useModuleForm from "@/hooks/ModuleFormHook";
+import { ModuleInterface, CourseInterface } from "@/types/courses";
+import useModules from "@/store/modules";
+import useCourses from "@/store/courses";
 
 const AddModule = ({
-  courseID,
+  course,
   accessToken,
 }: {
-  courseID: string;
+  course: CourseInterface;
   accessToken: string;
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -36,12 +39,21 @@ const AddModule = ({
     setIsInvalid,
     handleSubmit,
     handleChange,
-  } = useModuleForm({ accessToken, courseID });
+  } = useModuleForm({ accessToken, courseID: course.id });
+
+  const { addModule } = useModules();
+  const { updateCourse } = useCourses();
 
   const createModule = async () => {
     try {
-      const request = await handleSubmit();
-      location.reload();
+      let request = await handleSubmit();
+      if(request){
+        let moduleAdd: ModuleInterface = request.data;
+        addModule(moduleAdd);
+        course.num_modules += 1;
+        updateCourse(course);
+        onOpenChange();
+      }
     } catch (e: any) {
       let errors = e.response.data;
 

@@ -125,7 +125,7 @@ export const useModuleForm = ({
     if (!isFormValid) {
       return false;
     }
-
+    
     const request = await CreateModuleRequest(formData, accessToken);
 
     return request;

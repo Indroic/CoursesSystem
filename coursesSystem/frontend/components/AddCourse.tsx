@@ -22,6 +22,9 @@ import {
 
 import useCourseForm from "@/hooks/CourseFormHook";
 
+import { CourseInterface } from "@/types/courses";
+import useCourses from "@/store/courses";
+
 const AddCourse = ({
   userID,
   accessToken,
@@ -58,13 +61,17 @@ const AddCourse = ({
     { label: "Avanzado", value: "Avanzado" },
   ];
 
+  const { addCourse } = useCourses();
+
   const createCourse = async () => {
     formData.miniature = acceptedFiles[0];
 
     try {
       const request = await handleSubmit();
-      if (!request){
-        
+      if (request) {
+        let curse = request.data;
+        addCourse(curse);
+        onOpenChange();
       }
     } catch (e: any) {
       let errors = e.response.data;
@@ -90,7 +97,7 @@ const AddCourse = ({
           {(onClose) => (
             <form
               onSubmit={async (e) => {
-
+                e.preventDefault();
                 return await createCourse();
               }}
             >

@@ -253,14 +253,14 @@ const LessonInfo = ({
       </Modal>
       <Card
         as={"div"}
-        className="relative py-0 px-0 min-w-40 max-w-44 md:max-w-xs h-full min-h-36  gap-0 shadow-lg shadow-blue-500/50 hover:-translate-y-5 hover:shadow-blue-500 transition-shadow"
+        className="relative py-0 px-0 min-w-40 max-w-44 md:max-w-xs h-full min-h-36  gap-0 shadow-lg shadow-blue-500/50 hover:-translate-y-5 hover:shadow-blue-500 dark:shadow-blue-900 transition-shadow"
       >
-        <CardHeader className="relative pb-0 pt-0 px-0 flex-col  items-star w-full">
+        <CardHeader className="relative pb-0 pt-0 px-0 flex flex-col items-center">
           <Image
             alt="Course Miniature"
-            className="object-cover max-h-44 rounded-none"
+            className="max-h-44 rounded-none object-cover"
             src={lesson.miniature}
-            width="auto"
+            width="full"
           />
           <Dropdown className="absolute top-0 right-0 z-10">
             <DropdownTrigger>
@@ -274,7 +274,7 @@ const LessonInfo = ({
               </DropdownItem>
               <DropdownItem
                 color="danger"
-                onClick={() => DeleteLesson(lesson.id, accessToken)}
+                onClick={() => {DeleteLesson(lesson.id, accessToken); location.reload();}}
               >
                 Eliminar Lección
               </DropdownItem>

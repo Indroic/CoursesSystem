@@ -245,7 +245,7 @@ export default function DropdownCourse({
                     </form>
                   </Tab>
                   <Tab key="Módulos" title="Módulos">
-                    <ModulesList accessToken={accessToken} getCourseModules={course.id} onOpenParentChange={onClose} />
+                    <ModulesList accessToken={accessToken} course={course} onOpenParentChange={onClose} />
                   </Tab>
                 </Tabs>
               </ModalBody>

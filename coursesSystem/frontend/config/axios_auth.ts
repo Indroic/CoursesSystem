@@ -149,6 +149,8 @@ const CreateModuleRequest = async (data: any, token: string) => {
       "Content-Type": "multipart/form-data",
     },
   });
+
+  return request;
 };
 
 const UpdateCourseRequest = async (
