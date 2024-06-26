@@ -35,10 +35,13 @@ export const Navbar = () => {
           },
           {
             label: "Cursos",
-            href: "/home/courses",
+            href: "/",
             permission: "courses.view_course",
           },
-          { label: "Inicio", href: "/" },
+          {
+            label: "Inicio",
+            href: "/",
+          }
         ].filter(
           (item) => !item.permission || permissions.includes(item.permission)
         );
@@ -47,7 +50,6 @@ export const Navbar = () => {
         changeLoaded();
       }
     };
-
     fetchPermissions();
   }, []);
 

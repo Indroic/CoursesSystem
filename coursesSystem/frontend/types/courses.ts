@@ -3,7 +3,7 @@ interface CourseInterface {
   name: string;
   description: string;
   level: string;
-  miniature: string;
+  miniature: any;
   num_modules: number;
   created_at: string;
   updated_at: string;

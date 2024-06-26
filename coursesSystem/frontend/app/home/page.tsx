@@ -7,7 +7,7 @@ export default function Home() {
       <h1 className="text-5xl font-extrabold text-white py-4">Cursos</h1>
       <Divider className="my-5 bg-white" />
       <div>
-        <CoursesList />
+        <CoursesList href accessToken=""/>
       </div>
     </section>
   );

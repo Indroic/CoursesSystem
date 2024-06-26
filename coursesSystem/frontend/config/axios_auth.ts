@@ -117,6 +117,92 @@ const GetModuleRequest = async (module_id: string) => {
   return request;
 };
 
+const DeleteCourse = async (module_id: string, token: string) => {
+  const request = await axiosRequestWithAuth(token).delete(
+    url_courses + `${module_id}`
+  );
+};
+
+const CreateLessonRequest = async (data: any, token: string) => {
+  const request = await axiosRequestWithAuth(token).post(url_lessons, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return request;
+};
+
+const CreateCourseRequest = async (data: any, token: string) => {
+  const request = await axiosRequestWithAuth(token).post(url_courses, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return request;
+};
+
+const CreateModuleRequest = async (data: any, token: string) => {
+  const request = await axiosRequestWithAuth(token).post(url_modules, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
+
+const UpdateCourseRequest = async (
+  data: any,
+  token: string,
+  courseID: string
+) => {
+  const request = await axiosRequestWithAuth(token).patch(
+    `${url_courses}${courseID}/`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return request;
+};
+
+const UpdateModuleRequest = async (
+  data: any,
+  moduleID: string,
+  accessToken: string
+) => {
+  const request = await axiosRequestWithAuth(accessToken).patch(
+    `${url_modules}${moduleID}/`,
+    data,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    }
+  );
+
+  return request;
+};
+
+const DeleteModule = async (moduleID: string, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).delete(
+    `${url_modules}${moduleID}/`
+  );
+  return request;
+
+}
+
+const DeleteLesson = async (lessonID: string, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).delete(
+    `${url_lessons}${lessonID}/`
+  )
+
+  return request;
+}
+
 export {
   axiosRequest,
   LoginRequest,
@@ -130,4 +216,12 @@ export {
   GetLessonsRequest,
   GetModuleRequest,
   GetLessonsOfModuleRequest,
+  DeleteCourse,
+  CreateCourseRequest,
+  UpdateCourseRequest,
+  CreateModuleRequest,
+  CreateLessonRequest,
+  UpdateModuleRequest,
+  DeleteModule,
+  DeleteLesson
 };

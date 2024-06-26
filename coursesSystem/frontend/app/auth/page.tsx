@@ -23,7 +23,6 @@ export default function Login() {
     const request = await handleSubmit();
 
     if (request?.error) {
-      console.log(request);
       setErrorMessage({
         username: "Usuario o Contraseña Inválidos",
         password: "Usuario o Contraseña Inválidos",

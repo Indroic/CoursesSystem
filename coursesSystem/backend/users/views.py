@@ -16,24 +16,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     
-    # Permisos para este endpoint
-    def get_permissions(self):
-        permission_classes = [IsAuthenticated]
 
-        if self.action == 'create':
-            permission_classes.append(IsAdminUser)
-        
-        if self.action == 'list':
-            permission_classes.append(IsAdminUser)
-        
-        if self.action == 'update' or self.action == 'partial_update':
-            permission_classes.append(IsAdminUser)
-        
-        if self.action == 'retrieve':
-            permission_classes.append(isUser)
-        
-        return [permission() for permission in permission_classes]
-
+    
 # Clase encargada de registrar un nuevo usuario
 class RegisterViewSet(viewsets.ViewSet):
     serializer_class = RegisterSerializer

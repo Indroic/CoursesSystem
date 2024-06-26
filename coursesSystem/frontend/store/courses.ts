@@ -1,18 +1,7 @@
 import { create } from "zustand";
 
 import { GetCoursesRequest } from "@/config/axios_auth";
-
-export interface CourseInterface {
-  id: string;
-  name: string;
-  description: string;
-  level: string;
-  miniature: string;
-  num_modules: number;
-  created_at: string;
-  updated_at: string;
-  uploaded_by: string;
-}
+import { CourseInterface } from "@/types/courses";
 
 interface CourseState {
   courses: CourseInterface[];

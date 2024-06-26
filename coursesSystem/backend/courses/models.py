@@ -9,7 +9,10 @@ def generar_nombre_miniatura(instance, filename):
     extension = filename.split('.')[-1]
 
     # obtiene el nombre del curso
-    curso = instance.name
+    try:
+        curso = instance.name
+    except AttributeError:
+        curso = instance.title
     
     # genera una cadena de caracteres para el nombre del archivo y elimina todos los "-" que tenga
     caracteres = str(uuid.uuid4()).replace('-', '')
@@ -66,7 +69,7 @@ class Course(models.Model):
     level = models.CharField(max_length=20, 
                              unique=False, 
                              null=False, 
-                             blank=False, 
+                             blank=False,
                              default=_("Initial"), 
                              choices=((_("Initial"), _("Initial")),
                                       (_("Medium"), _("Medium")),
@@ -116,12 +119,9 @@ class Course(models.Model):
     # Funcion de eliminacion
     def delete(self, *args, **kwargs):
         # Verifica que la miniatura no sea la por defecto
-        if self.miniature.path != settings.DEFAULT_MINIATURE:
-            try:
-                # Elimina la miniatura
-                os.remove(self.miniature.path)
-            except FileNotFoundError:
-                pass
+        print(self.miniature.path)
+        print(settings.DEFAULT_MINIATURE)
+
         # Retorna la funcion anterior
         return super().delete(*args, **kwargs)
 

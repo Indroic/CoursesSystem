@@ -5,7 +5,7 @@ class isUser(BasePermission):
         if request.user.is_superuser:
             return True
         
-        if request.user != User.object.get(id=view.kwargs["pk"]):
+        if request.user != User.objects.get(id=view.kwargs["pk"]):
             return False
         
         return True
