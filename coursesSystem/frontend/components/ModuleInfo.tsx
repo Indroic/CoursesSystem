@@ -54,7 +54,7 @@ const ModuleInfo = ({
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const {addLesson } = useLessons();
-  const { updateModule } = useModules();
+  const { updateModule, deleteModule } = useModules();
   const [lessonsErrors, setLessonsErrors] = useState({
     title: "",
     description: "",
@@ -347,6 +347,7 @@ const ModuleInfo = ({
                 color="danger"
                 onClick={() => {
                   DeleteModule(module.id, accessToken); 
+                  deleteModule(module);
                   onOpenParentChange();
                 }}
               >

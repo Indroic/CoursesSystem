@@ -27,6 +27,7 @@ import {
 
 import { LessonInterface } from "@/types/courses";
 import { DeleteLesson } from "@/config/axios_auth";
+import useLessons from "@/store/lessons";
 
 import { useVideoDropZone, useImageDropZone } from "@/hooks/DropZones";
 
@@ -52,6 +53,8 @@ const LessonInfo = ({
     isImageDragActive,
     acceptedImageFiles,
   } = useImageDropZone();
+
+  const { deleteLesson } = useLessons();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [lessonsErrors, setLessonsErrors] = useState({
@@ -274,7 +277,7 @@ const LessonInfo = ({
               </DropdownItem>
               <DropdownItem
                 color="danger"
-                onClick={() => {DeleteLesson(lesson.id, accessToken); location.reload();}}
+                onClick={() => {DeleteLesson(lesson.id, accessToken); deleteLesson(lesson);}}
               >
                 Eliminar Lección
               </DropdownItem>
