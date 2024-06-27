@@ -34,7 +34,7 @@ export const useCourseForm = ({
   });
 
   const isInvalidName = (name: string) => {
-    const nameRegex = /^[a-zA-Z\s\.\-]*$/;
+    const nameRegex = /^[\u0000-\uFFFF]*$/;
 
     if (!nameRegex.test(name)) {
       setErrorMesages((prevState) => ({
@@ -64,7 +64,7 @@ export const useCourseForm = ({
   };
 
   const isInvalidDescription = (description: string) => {
-    const descriptionRegex = /^[a-zA-Z]*$/;
+    const descriptionRegex = /^[\u0000-\uFFFF]*$/;
 
     if (!descriptionRegex.test(description)) {
       setErrorMesages((prevState) => ({
@@ -192,7 +192,7 @@ export const useCourseForm = ({
     }
 
     if (fieldName === "miniature" && !isInvalidMiniature) {
-      return false
+      return false;
     }
 
     return true;

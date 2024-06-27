@@ -18,6 +18,16 @@ const url_modules = "modules/";
 
 const url_get_user = "users/";
 
+const url_exams = "exams/";
+
+const url_questions = "questions/";
+
+const url_options = "options/";
+
+const url_exams_realized = "examsRealized/";
+
+const url_certificates = "certificates/";
+
 export {
   base_url,
   url_media,
@@ -28,5 +38,10 @@ export {
   url_verify_token,
   url_login,
   url_get_user,
-  url_modules
+  url_modules,
+  url_exams,
+  url_questions,
+  url_options,
+  url_exams_realized,
+  url_certificates,
 };

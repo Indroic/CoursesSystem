@@ -53,7 +53,7 @@ const ModuleInfo = ({
   onOpenParentChange: () => void;
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const {addLesson } = useLessons();
+  const { addLesson } = useLessons();
   const { updateModule, deleteModule } = useModules();
   const [lessonsErrors, setLessonsErrors] = useState({
     title: "",
@@ -89,7 +89,7 @@ const ModuleInfo = ({
         formikLesson.resetForm();
         let lesson: LessonInterface = response.data;
         module.num_lessons = module.num_lessons + 1;
-        updateModule(module)
+        updateModule(module);
         addLesson(lesson);
         onOpenChange();
       }
@@ -110,14 +110,13 @@ const ModuleInfo = ({
     },
   });
 
-  
   const createLesson = async () => {
     try {
       let response = await formikLesson.submitForm();
 
       formikLesson.resetForm();
     } catch (e) {
-      try{
+      try {
         let errors = e.response.data;
         console.log(errors);
         if (errors) {
@@ -126,8 +125,8 @@ const ModuleInfo = ({
             setLessonsErrors({ ...lessonsErrors, [key]: errors[key][0] });
           });
         }
-      } catch(error){
-        console.log(error)
+      } catch (error) {
+        console.log(error);
       }
     }
   };
@@ -328,7 +327,10 @@ const ModuleInfo = ({
         </ModalContent>
       </Modal>
 
-      <Card as={"div"} className="min-w-40 max-w-44 md:max-w-xs h-full min-h-36  gap-0 shadow-lg shadow-blue-500/50  dark:shadow-blue-900  transition-shadow">
+      <Card
+        as={"div"}
+        className="min-w-40 max-w-44 md:max-w-xs h-full min-h-36  gap-0 shadow-lg shadow-blue-500/50  dark:shadow-blue-900  transition-shadow"
+      >
         <CardHeader className="">
           <span className="relative flex flex-col font-semibold text-xs md:text-sm">
             Módulo: {module.name}
@@ -346,7 +348,7 @@ const ModuleInfo = ({
               <DropdownItem
                 color="danger"
                 onClick={() => {
-                  DeleteModule(module.id, accessToken); 
+                  DeleteModule(module.id, accessToken);
                   deleteModule(module);
                   onOpenParentChange();
                 }}

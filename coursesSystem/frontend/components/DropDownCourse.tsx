@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useFormik } from "formik";
 import { RiArrowDownSLine, RiGalleryUploadFill } from "@remixicon/react";
 import { useDropzone } from "react-dropzone";
 
@@ -26,23 +27,32 @@ import {
 
 import { useSession } from "next-auth/react";
 
-import { CourseInterface } from "@/types/courses";
+import {
+  CourseInterface,
+  ExamInterface,
+  QuestionInterface,
+} from "@/types/courses";
 import useUpdateCourseForm from "@/hooks/UpdateCourseFormHook";
 
-import { DeleteCourse } from "@/config/axios_auth";
+import { DeleteCourse, CreateExam, CreateQuestion } from "@/config/axios_auth";
 import ModulesList from "./ModulesList";
 
 import useCourses from "@/store/courses";
+import QuestionList from "./QuestionList";
+import { useExams, useQuestions } from "@/store/exams";
 
 export default function DropdownCourse({
   course,
   accessToken,
-  userID
+  userID,
 }: {
   course: CourseInterface;
   accessToken: string;
   userID: string;
 }) {
+  const [selected, setSelected] = React.useState("Editar_Curso");
+  const { addQuestion } = useQuestions();
+  const { getExams, exams } = useExams();
   const { data: session, status } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [useDeleteButton, setDeleteButton] = useState<React.ReactElement>(
@@ -86,6 +96,8 @@ export default function DropdownCourse({
         </DropdownItem>
       );
     }
+
+    getExams(course.id);
   }, [status, course, session?.user.accessToken]);
 
   const levels = [
@@ -96,20 +108,105 @@ export default function DropdownCourse({
 
   const updateCourse = async () => {
     formData.miniature = acceptedFiles[0];
-    console.log(formData)
+    console.log(formData);
     try {
       const request = await handleSubmit();
       if (!request) {
-        
       }
     } catch (e: any) {
-      console.log(e)
+      console.log(e);
       let errors = e.response.data;
 
       if (errors) {
         Object.keys(errors).forEach((key) => {
           setErrorMesages({ ...errorMessages, [key]: errors[key][0] });
           setIsInvalid({ ...isInvalid, [key]: true });
+        });
+      }
+    }
+  };
+
+  const examInitialValues = {
+    title: "",
+    course: course.id,
+  };
+
+  const examFormik = useFormik({
+    initialValues: examInitialValues,
+    onSubmit: async (values) => {
+      const response = await CreateExam(values, accessToken);
+
+      if (response.status === 400) {
+        let errors = response.data;
+        if (errors) {
+          Object.keys(errors).forEach((key) => {
+            questionFormik.setFieldError(key, errors[key][0]);
+          });
+        }
+      }
+
+      if (response.status === 201 || response.status === 200) {
+        console.log(response.data);
+      }
+    },
+  });
+
+  const [isInvalidInputTitle, setIsInvalidInputTitle] = useState(false);
+
+  const handleSutmitExam = async () => {
+    try {
+      const response = await examFormik.submitForm();
+      getExams(course.id);
+    } catch (e) {
+      let errors = e.response.data;
+      if (errors) {
+        Object.keys(errors).forEach((key) => {
+          questionFormik.setFieldError(key, errors[key][0]);
+          setIsInvalidInputTitle(true);
+        });
+      }
+    }
+  };
+
+  const questionFormik = useFormik({
+    initialValues: {
+      question: "",
+      exam: "",
+    },
+    onSubmit: async (values) => {
+      const request = await CreateQuestion(values, accessToken);
+
+      if (request.status === 201) {
+        let question: QuestionInterface = request.data;
+
+        addQuestion(question);
+
+        questionFormik.resetForm();
+      }
+
+      if (request.status === 400) {
+        let errors = request.data;
+        if (errors) {
+          Object.keys(errors).forEach((key) => {
+            questionFormik.setFieldError(key, errors[key][0]);
+          });
+        }
+      }
+    },
+  });
+
+  const handleSutmitQuestion = async (examID) => {
+    try {
+      const values = questionFormik.values;
+      values.exam = examID;
+      const response = await CreateQuestion(values, accessToken);
+      questionFormik.resetForm();
+      setSelected("Examen");
+    } catch (e) {
+      let errors = e.response.data;
+      if (errors) {
+        Object.keys(errors).forEach((key) => {
+          questionFormik.setFieldError(key, errors[key][0]);
         });
       }
     }
@@ -126,12 +223,13 @@ export default function DropdownCourse({
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
+              <ModalHeader className="flex flex-col gap-1 dark:text-white">
                 {course.name}
               </ModalHeader>
               <ModalBody>
-                <Tabs>
-                  <Tab key="Editar Curso" title="Editar Curso">
+                <Tabs         selectedKey={selected}
+        onSelectionChange={setSelected}>
+                  <Tab key="Editar_Curso" title="Editar Curso">
                     <form className="flex flex-col gap-5 w-full min-h-full justify-between">
                       <section className="flex flex-row gap-5">
                         <section className="flex flex-col gap-5 justify-between w-full">
@@ -240,7 +338,10 @@ export default function DropdownCourse({
                         <Button
                           className="w-full"
                           color="primary"
-                          onClick={async () => {await updateCourse(); location.reload();}}
+                          onClick={async () => {
+                            await updateCourse();
+                            location.reload();
+                          }}
                         >
                           Editar
                         </Button>
@@ -248,8 +349,70 @@ export default function DropdownCourse({
                     </form>
                   </Tab>
                   <Tab key="Módulos" title="Módulos">
-                    <ModulesList accessToken={accessToken} course={course} onOpenParentChange={onClose} />
+                    <ModulesList
+                      accessToken={accessToken}
+                      course={course}
+                      onOpenParentChange={onClose}
+                    />
                   </Tab>
+                  <Tab key="Examen" title="Examen">
+                    {exams.length > 0 ? (
+                      <div className="flex flex-col gap-4">
+                        <span className="dark:text-white font-bold">
+                          Examen: {exams[0].title}
+                        </span>
+                        <QuestionList
+                          accessToken={accessToken}
+                          exam={exams[0]}
+                        />
+                      </div>
+                    ) : (
+                      <div className="flex flex-col gap-4">
+                        <Input
+                          required
+                          errorMessage={examFormik.errors.title}
+                          isInvalid={isInvalidInputTitle}
+                          label="Título del Examen"
+                          name="title"
+                          placeholder="Ingrese un Título para el Examen"
+                          value={examFormik.values.title}
+                          onChange={examFormik.handleChange}
+                        />
+                        <Button
+                          color="primary"
+                          onClick={() => handleSutmitExam()}
+                        >
+                          Crear Examen
+                        </Button>
+                      </div>
+                    )}
+                  </Tab>
+                  {exams.length > 0 ? (
+                    <Tab
+                      title="Añadir Pregunta"
+                      className="flex flex-col gap-5"
+                    >
+                      <Input
+                        name="question"
+                        label="Pregunta"
+                        placeholder="Ingrese una Pregunta"
+                        onChange={questionFormik.handleChange}
+                      />
+                      <Button
+                        color="primary"
+                        onClick={() => handleSutmitQuestion(exams[0].id)}
+                      >
+                        Añadir Pregunta
+                      </Button>
+                    </Tab>
+                  ) : (
+                    <Tab
+                      title="Añadir Pregunta"
+                      className="dark:text-white font-bold"
+                    >
+                      Primero Crea el Examen !!
+                    </Tab>
+                  )}
                 </Tabs>
               </ModalBody>
             </>

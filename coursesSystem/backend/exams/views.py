@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticated
 
-from .serializers import ExamSerializer
+from .serializers import ExamSerializer, QuestionSerializer, OptionSerializer
 from .models import Exam, Question, Option
 from .permissions import(CanAddExam, 
                          CanDeleteQuestion, 
@@ -22,13 +22,16 @@ class ExamViewSet(ModelViewSet):
     # Queryset para Examenes
     queryset = Exam.objects.all()
 
-    search_fields = ['title', 'course__name', 'course__uploaded_by__username']
+    search_fields = ['title', 'course__name', 'course__uploaded_by__username', 'course__id', 'id']
 
     # Permisos
     def get_permissions(self):
 
         # Permisos para Examenes
         permission_classes = [IsAuthenticated]
+
+        if self.action == "list" or self.action == "retrieve":
+            permission_classes = []
 
         # Condicion para agregar un permiso cuando se intente crear un examen
         if self.action == "create":
@@ -50,10 +53,12 @@ class QuestionViewSet(ModelViewSet):
     """ Endpoint para ver, crear, actualizar y borrar Preguntas """
 
     # Serializador para Preguntas
-    serializer_class = ExamSerializer
+    serializer_class = QuestionSerializer
 
     # Queryset para Preguntas
     queryset = Question.objects.all()
+
+    search_fields = ['question', 'exam__title', 'exam__course__name', 'exam__course__uploaded_by__username', 'exam__id', 'id']
 
     # Funcion para crear Preguntas
     def create(self, request, *args, **kwargs):
@@ -81,6 +86,10 @@ class QuestionViewSet(ModelViewSet):
         # Permisos para Examenes
         permission_classes = [IsAuthenticated]
 
+        if self.action == "list" or self.action == "retrieve":
+            permission_classes = []
+
+
         # Condicion para agregar un permiso cuando se intente crear un examen
         if self.action == "create":
             permission_classes.append(CanAddQuestion)
@@ -102,16 +111,22 @@ class OptionViewSet(ModelViewSet):
     """ Endpoint para ver, crear, actualizar y borrar Opciones """
 
     # Serializador para Opciones
-    serializer_class = ExamSerializer
+    serializer_class = OptionSerializer
     
     # Queryset para Opciones
     queryset = Option.objects.all()
+
+    search_fields = ['content', 'question__question', 'question__exam__title', 'question__exam__course__name', 'question__exam__course__uploaded_by__username', 'question__exam__id', 'question__id', 'id']
 
     # Permisos
     def get_permissions(self):
 
         # Permisos para Examenes
         permission_classes = [IsAuthenticated]
+
+        if self.action == "list" or self.action == "retrieve":
+            permission_classes = []
+
 
         # Condicion para agregar un permiso cuando se intente crear un examen
         if self.action == "create":

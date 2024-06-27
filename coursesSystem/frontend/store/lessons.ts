@@ -20,7 +20,7 @@ const useLessons = create<LessonState>((set) => ({
     set((state) => ({
       ...state,
       lessons: state.lessons.map((l: LessonInterface) =>
-        l.id === lesson.id ? lesson : l,
+        l.id === lesson.id ? lesson : l
       ),
     })),
   deleteLesson: (lesson) =>

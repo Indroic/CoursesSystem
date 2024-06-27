@@ -9,6 +9,11 @@ import {
   url_courses,
   url_modules,
   url_lessons,
+  url_exams,
+  url_questions,
+  url_options,
+  url_exams_realized,
+  url_certificates,
 } from "./constands";
 
 const axiosRequest = axios.create({
@@ -194,28 +199,148 @@ const DeleteModule = async (moduleID: string, accessToken: string) => {
     `${url_modules}${moduleID}/`
   );
   return request;
-
-}
+};
 
 const DeleteLesson = async (lessonID: string, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).delete(
     `${url_lessons}${lessonID}/`
-  )
+  );
 
   return request;
-}
+};
 
-const UpdateLessonRequest = async (data: any, lessonID: string, accessToken: string) => {
+const UpdateLessonRequest = async (
+  data: any,
+  lessonID: string,
+  accessToken: string
+) => {
   const request = await axiosRequestWithAuth(accessToken).patch(
     `${url_lessons}${lessonID}/`,
-    data,{
+    data,
+    {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     }
-  )
- return request
-}
+  );
+  return request;
+};
+
+const GetExamsOfCourseRequest = async (courseID: string) => {
+  const request = await axiosRequest.get(`${url_exams}?search=${courseID}`);
+
+  return request;
+};
+
+const GetQuestionsOfExamRequest = async (examID: string) => {
+  const request = await axiosRequest.get(`${url_questions}?search=${examID}`);
+
+  return request;
+};
+
+const GetOptionsOfQuestionRequest = async (questionID: string) => {
+  const request = await axiosRequest.get(`${url_options}?search=${questionID}`);
+
+  return request;
+};
+
+const CreateExam = async (data: any, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).post(
+    `${url_exams}`,
+    data
+  );
+
+  return request;
+};
+
+const CreateQuestion = async (data: any, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).post(
+    `${url_questions}`,
+    data
+  );
+
+  return request;
+};
+
+const CreateOption = async (data: any, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).post(
+    `${url_options}`,
+    data
+  );
+
+  return request;
+};
+
+const UpdateExam = async (data: any, examID: string, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).patch(
+    `${url_exams}${examID}/`,
+    data
+  );
+
+  return request;
+};
+
+const UpdateQuestion = async (
+  data: any,
+  questionID: string,
+  accessToken: string
+) => {
+  const request = await axiosRequestWithAuth(accessToken).patch(
+    `${url_questions}${questionID}/`,
+    data
+  );
+
+  return request;
+};
+
+const UpdateOption = async (
+  data: any,
+  optionID: string,
+  accessToken: string
+) => {
+  const request = await axiosRequestWithAuth(accessToken).patch(
+    `${url_options}${optionID}/`,
+    data
+  );
+
+  return request;
+};
+
+const DeleteExam = async (examID: string, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).delete(
+    `${url_exams}${examID}/`
+  );
+
+  return request;
+};
+
+const DeleteQuestion = async (questionID: string, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).delete(
+    `${url_questions}${questionID}/`
+  );
+
+  return request;
+};
+
+const DeleteOption = async (optionID: string, accessToken: string) => {
+  const request = await axiosRequestWithAuth(accessToken).delete(
+    `${url_options}${optionID}/`
+  );
+
+  return request;
+};
+
+const CreateExamRealized = async (data: any) => {
+  const request = await axiosRequest.post(`${url_exams_realized}`, data);
+
+  return request;
+};
+
+const CreateCertificate = async (data: any) => {
+  const request = await axiosRequest.post(`${url_certificates}`, data);
+
+  return request;
+};
 
 export {
   axiosRequest,
@@ -238,5 +363,19 @@ export {
   UpdateModuleRequest,
   DeleteModule,
   DeleteLesson,
-  UpdateLessonRequest
+  UpdateLessonRequest,
+  GetExamsOfCourseRequest,
+  GetQuestionsOfExamRequest,
+  GetOptionsOfQuestionRequest,
+  CreateExam,
+  CreateOption,
+  CreateQuestion,
+  UpdateExam,
+  UpdateOption,
+  UpdateQuestion,
+  DeleteExam,
+  DeleteOption,
+  DeleteQuestion,
+  CreateExamRealized,
+  CreateCertificate,
 };

@@ -117,7 +117,7 @@ class CanChangeQuestion(BasePermission):
     def has_permission(self, request, view):
         
         # Obtiene los permisos del usuario
-        question = Question.objects.get(id=request.data["pk"])
+        question = Question.objects.get(id=view.kwargs["pk"])
 
         # Obtiene el examen
         permisos_usuario = request.user.user_permissions.all()
@@ -146,7 +146,7 @@ class CanDeleteQuestion(BasePermission):
         permisos_usuario = request.user.user_permissions.all()
         
         # Obtiene el examen
-        question = Question.objects.get(id=request.data["pk"])
+        question = Question.objects.get(id=view.kwargs["pk"])
 
         # Verifica si el usuario es superusuario
         if request.user.is_superuser:
@@ -203,7 +203,7 @@ class CanChangeOption(BasePermission):
         permisos_usuario = request.user.user_permissions.all()
         
         # Obtiene la opccion
-        option = Option.objects.get(id=request.data["pk"])
+        option = Option.objects.get(id=view.kwargs["pk"])
 
         # Verifica si el usuario es superusuario
         if request.user.is_superuser:
@@ -229,7 +229,7 @@ class CanDeleteOption(BasePermission):
         permisos_usuario = request.user.user_permissions.all()
         
         # Obtiene la opccion
-        option = Option.objects.get(id=request.data["pk"])
+        option = Option.objects.get(id=view.kwargs["pk"])
 
 
         # Verifica si el usuario es superusuario

@@ -15,7 +15,6 @@ class CertificateViewSet(ModelViewSet):
     queryset = Certificate.objects.all()
 
     # Permisos
-    permission_classes = [IsAuthenticated]
 
     search_fields = ['user__username', 'name', 'description']
 
@@ -31,8 +30,8 @@ class ExamRealizedViewSet(ModelViewSet):
     queryset = ExamRealized.objects.all()
 
     # Permisos
-    permission_classes = [IsAuthenticated]
-
     search_fields = ['user__username', 'name', 'description']
+
+
 
     
