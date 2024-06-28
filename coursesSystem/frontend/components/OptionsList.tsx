@@ -21,7 +21,7 @@ const OptionsList = ({ question }: { question: QuestionInterface }) => {
     };
 
     fetchData();
-  }, [question.id]);
+  }, [question, options]);
 
   return (
     <CheckboxGroup>

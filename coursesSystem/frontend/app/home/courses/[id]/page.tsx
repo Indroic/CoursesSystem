@@ -15,6 +15,7 @@ import RealizarExamenButton from "@/components/RealizarExamenButton";
 const Course = ({ params }: { params: { id: string } }) => {
   const [course, setCourse] = useState<CourseInterface>({} as CourseInterface);
   const [modules, setModules] = useState<ModuleInterface[]>([]);
+  const [exams, setExams] = useState(<></>);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,13 +24,16 @@ const Course = ({ params }: { params: { id: string } }) => {
 
       setCourse(courseData);
       setModules(modulesData);
+      if (courseData) {
+        setExams(<RealizarExamenButton course={courseData} />);
+      }
     };
 
     fetchData();
   }, []);
 
   return (
-    <section className="text-white flex md:flex-row items-between h-full w-full justify-between gap-5">
+    <section className="text-white flex flex-col md:flex-row items-between h-full w-full justify-between gap-5">
       <MenuSelect>
         <MenuSelectHeader>
           <span>Módulos</span>
@@ -42,20 +46,20 @@ const Course = ({ params }: { params: { id: string } }) => {
           ))}
         </MenuSelectBody>
       </MenuSelect>
-      <section className="w-full grid grid-cols-1 my-10 mx-10">
-        <div className="flex flex-1 justify-between max-h-min">
+      <section className=" w-full grid grid-cols-1 my-10 mx-10">
+        <div className="flex flex-col md:flex-row justify-between max-h-min gap-5">
           <section className="flex flex-col">
             <span className="font-bold text-3xl text-white">{course.name}</span>
             <span className="font-light text-white text-xl">
               {course.level}
             </span>
           </section>
-          <RealizarExamenButton course={course} />
+          {exams}
         </div>
 
         <Image
           alt="Course Miniature"
-          className="w-[90dvw] max-h-[60dvh]"
+          className="w-[70dvw] md:w-[70dvw]  max-h-[60dvh] my-10 md:my-5"
           height={"auto"}
           src={course.miniature}
         />

@@ -3,7 +3,7 @@
 import { redirect } from "next/navigation";
 
 const redirectlogin = async () => {
-  return await redirect("/auth/login");
+  return await redirect("/auth/");
 };
 
 const redirectCourses = async () => {

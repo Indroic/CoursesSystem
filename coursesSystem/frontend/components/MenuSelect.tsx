@@ -6,7 +6,7 @@ const MenuSelect = ({ children }: { children: React.ReactNode }) => {
   return (
     <section
       className={
-        "flex flex-col w-[20dvw] py-8w-max-[20dvw] min-w-min  h-full border-r-1 border-white top-10  gap-4"
+        "flex-col w-[20dvw] py-8w-max-[20dvw] min-w-min hidden md:flex  h-full border-r-1 border-white top-10  gap-4"
       }
     >
       {children}

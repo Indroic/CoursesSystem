@@ -33,7 +33,6 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
   });
   const { getExam } = useExams();
   const { getQuestions, questions } = useQuestions();
-  const { getOptions, options } = useOptions();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: session, status } = useSession();
 
@@ -124,7 +123,7 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
           }}
         </ModalContent>
       </Modal>
-      <Button color="primary" onClick={() => onOpen()}>
+      <Button color="primary" className="max-w-min" onClick={() => onOpen()}>
         Realizar Examen
       </Button>
     </>

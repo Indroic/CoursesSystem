@@ -10,8 +10,9 @@
     "install-dependencies": "npm install && pip install -r requeriments.txt && cd coursesSystem/frontend && npm install",
     "dev-backend": "cd coursesSystem/backend && python manage.py runserver",
     "dev-frontend": "cd coursesSystem/frontend && npm run dev",
+    "build-frontend": "cd coursesSystem/frontend && npm run build && npm run start",
     "dev": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
-    "start": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
+    "start": "concurrently \"npm run dev-backend\" \"npm run build-frontend\"",
     "co": "sui-mono commit",
     "migrate": "cd coursesSystem/backend && python manage.py makemigrations && python manage.py migrate",
     "create-superuser": "cd coursesSystem/backend && python manage.py createsuperuser"
