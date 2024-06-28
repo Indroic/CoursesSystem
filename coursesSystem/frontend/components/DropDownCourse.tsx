@@ -214,7 +214,7 @@ export default function DropdownCourse({
   return (
     <>
       <Modal
-        className="min-h-96 dark"
+        className="min-h-96"
         isOpen={isOpen}
         size="4xl"
         onOpenChange={onOpenChange}

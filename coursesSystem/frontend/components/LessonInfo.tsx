@@ -107,7 +107,7 @@ const LessonInfo = ({
   return (
     <>
       <Modal
-        className="flex flex-col gap-5 dark"
+        className="flex flex-col gap-5"
         isOpen={isOpen}
         size="4xl"
         onOpenChange={onOpenChange}

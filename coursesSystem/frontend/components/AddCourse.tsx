@@ -87,7 +87,6 @@ const AddCourse = ({
   return (
     <>
       <Modal
-        className="dark"
         isOpen={isOpen}
         size="4xl"
         onOpenChange={onOpenChange}

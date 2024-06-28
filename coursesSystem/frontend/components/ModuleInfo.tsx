@@ -151,7 +151,6 @@ const ModuleInfo = ({
     <>
       <Modal
         backdrop="blur"
-        className="dark"
         isOpen={isOpen}
         size="4xl"
         onOpenChange={onOpenChange}

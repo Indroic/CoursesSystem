@@ -89,7 +89,7 @@ const QuestionInfo = ({
   return (
     <>
       <Modal
-        className="dark max-h-sm"
+        className="max-h-sm"
         isOpen={isOpen}
         scrollBehavior="inside"
         size="lg"
