@@ -56,7 +56,7 @@ export const useModuleForm = ({
   };
 
   const isInvalidDescription = (description: string) => {
-    const descriptionRegex = /^[a-zA-Z]*$/;
+    const descriptionRegex = /^[\u0000-\uFFFF]*$/;
 
     if (!descriptionRegex.test(description)) {
       setErrorMesages((prevState) => ({
