@@ -4,7 +4,6 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useFormik } from "formik";
 import { RiArrowDownSLine, RiGalleryUploadFill } from "@remixicon/react";
 import { useDropzone } from "react-dropzone";
-
 import {
   Dropdown,
   DropdownTrigger,
@@ -14,7 +13,6 @@ import {
   Modal,
   ModalBody,
   ModalHeader,
-  ModalFooter,
   useDisclosure,
   ModalContent,
   Textarea,
@@ -24,27 +22,20 @@ import {
   Tab,
   Tabs,
 } from "@nextui-org/react";
-
 import { useSession } from "next-auth/react";
 
-import {
-  CourseInterface,
-  ExamInterface,
-  QuestionInterface,
-} from "@/types/courses";
-import useUpdateCourseForm from "@/hooks/UpdateCourseFormHook";
-
-import { DeleteCourse, CreateExam, CreateQuestion } from "@/config/axios_auth";
 import ModulesList from "./ModulesList";
-
-import useCourses from "@/store/courses";
 import QuestionList from "./QuestionList";
+
+import { CourseInterface, QuestionInterface } from "@/types/courses";
+import useUpdateCourseForm from "@/hooks/UpdateCourseFormHook";
+import { DeleteCourse, CreateExam, CreateQuestion } from "@/config/axios_auth";
+import useCourses from "@/store/courses";
 import { useExams, useQuestions } from "@/store/exams";
 
 export default function DropdownCourse({
   course,
   accessToken,
-  userID,
 }: {
   course: CourseInterface;
   accessToken: string;
@@ -56,7 +47,7 @@ export default function DropdownCourse({
   const { data: session, status } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [useDeleteButton, setDeleteButton] = useState<React.ReactElement>(
-    <></>
+    <></>,
   );
   const {
     formData,
@@ -93,7 +84,7 @@ export default function DropdownCourse({
         >
           {" "}
           Eliminar Curso{" "}
-        </DropdownItem>
+        </DropdownItem>,
       );
     }
 
@@ -111,6 +102,7 @@ export default function DropdownCourse({
     console.log(formData);
     try {
       const request = await handleSubmit();
+
       if (!request) {
       }
     } catch (e: any) {
@@ -138,6 +130,7 @@ export default function DropdownCourse({
 
       if (response.status === 400) {
         let errors = response.data;
+
         if (errors) {
           Object.keys(errors).forEach((key) => {
             questionFormik.setFieldError(key, errors[key][0]);
@@ -156,9 +149,11 @@ export default function DropdownCourse({
   const handleSutmitExam = async () => {
     try {
       const response = await examFormik.submitForm();
+
       getExams(course.id);
     } catch (e) {
       let errors = e.response.data;
+
       if (errors) {
         Object.keys(errors).forEach((key) => {
           questionFormik.setFieldError(key, errors[key][0]);
@@ -186,6 +181,7 @@ export default function DropdownCourse({
 
       if (request.status === 400) {
         let errors = request.data;
+
         if (errors) {
           Object.keys(errors).forEach((key) => {
             questionFormik.setFieldError(key, errors[key][0]);
@@ -198,12 +194,15 @@ export default function DropdownCourse({
   const handleSutmitQuestion = async (examID) => {
     try {
       const values = questionFormik.values;
+
       values.exam = examID;
       const response = await CreateQuestion(values, accessToken);
+
       questionFormik.resetForm();
       setSelected("Examen");
     } catch (e) {
       let errors = e.response.data;
+
       if (errors) {
         Object.keys(errors).forEach((key) => {
           questionFormik.setFieldError(key, errors[key][0]);
@@ -215,10 +214,10 @@ export default function DropdownCourse({
   return (
     <>
       <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-        size="4xl"
         className="min-h-96 dark"
+        isOpen={isOpen}
+        size="4xl"
+        onOpenChange={onOpenChange}
       >
         <ModalContent>
           {(onClose) => (
@@ -227,8 +226,7 @@ export default function DropdownCourse({
                 {course.name}
               </ModalHeader>
               <ModalBody>
-                <Tabs         selectedKey={selected}
-        onSelectionChange={setSelected}>
+                <Tabs selectedKey={selected} onSelectionChange={setSelected}>
                   <Tab key="Editar_Curso" title="Editar Curso">
                     <form className="flex flex-col gap-5 w-full min-h-full justify-between">
                       <section className="flex flex-row gap-5">
@@ -254,8 +252,8 @@ export default function DropdownCourse({
                             name="level"
                             placeholder="Seleccione un Nivel para el Curso"
                             selectionMode="single"
-                            variant="flat"
                             value={formData.level}
+                            variant="flat"
                             onChange={(e) => {
                               setFormData({
                                 ...formData,
@@ -389,12 +387,12 @@ export default function DropdownCourse({
                   </Tab>
                   {exams.length > 0 ? (
                     <Tab
-                      title="Añadir Pregunta"
                       className="flex flex-col gap-5"
+                      title="Añadir Pregunta"
                     >
                       <Input
-                        name="question"
                         label="Pregunta"
+                        name="question"
                         placeholder="Ingrese una Pregunta"
                         onChange={questionFormik.handleChange}
                       />
@@ -407,8 +405,8 @@ export default function DropdownCourse({
                     </Tab>
                   ) : (
                     <Tab
-                      title="Añadir Pregunta"
                       className="dark:text-white font-bold"
+                      title="Añadir Pregunta"
                     >
                       Primero Crea el Examen !!
                     </Tab>

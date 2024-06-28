@@ -3,7 +3,6 @@ import { RiGalleryUploadFill } from "@remixicon/react";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { RiAddCircleFill } from "@remixicon/react";
-
 import {
   Card,
   CardBody,
@@ -21,8 +20,6 @@ import {
 } from "@nextui-org/react";
 
 import useCourseForm from "@/hooks/CourseFormHook";
-
-import { CourseInterface } from "@/types/courses";
 import useCourses from "@/store/courses";
 
 const AddCourse = ({
@@ -68,8 +65,10 @@ const AddCourse = ({
 
     try {
       const request = await handleSubmit();
+
       if (request) {
         let curse = request.data;
+
         addCourse(curse);
         onOpenChange();
       }
@@ -98,6 +97,7 @@ const AddCourse = ({
             <form
               onSubmit={async (e) => {
                 e.preventDefault();
+
                 return await createCourse();
               }}
             >

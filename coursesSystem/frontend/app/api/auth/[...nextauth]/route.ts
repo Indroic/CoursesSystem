@@ -1,5 +1,6 @@
 import NextAuth, { type User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { cookies } from "next/headers";
 
 import {
   LoginRequest,
@@ -7,8 +8,6 @@ import {
   RefreshTokenRequest,
   GetUserRequest,
 } from "@/config/axios_auth";
-
-import { cookies } from "next/headers";
 
 interface CustomUser extends User {
   id: string;
@@ -94,6 +93,7 @@ const handler = NextAuth({
     async signIn({ user, account, profile, email, credentials }) {
       try {
         const authResposnse = await Auth(credentials);
+
         account.access_token = authResposnse.accessToken;
         account.refresh_token = authResposnse.refreshToken;
 
@@ -106,8 +106,9 @@ const handler = NextAuth({
       if (account) {
         const accessToken = await RefreshTokenRequest(
           account.refresh_token,
-          user.name
+          user.name,
         );
+
         token.refreshToken = account.access_token;
         token.accessToken = accessToken.data.refresh;
       }

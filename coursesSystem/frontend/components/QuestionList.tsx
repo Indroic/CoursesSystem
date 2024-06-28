@@ -2,9 +2,10 @@
 
 import { useEffect } from "react";
 
+import QuestionInfo from "./QuestionInfo";
+
 import { useQuestions } from "@/store/exams";
 import { QuestionInterface, ExamInterface } from "@/types/courses";
-import QuestionInfo from "./QuestionInfo";
 
 const QuestionList = ({
   exam,
@@ -24,8 +25,8 @@ const QuestionList = ({
       {questions.map((question: QuestionInterface) => (
         <QuestionInfo
           key={question.id}
-          question={question}
           accessToken={accessToken}
+          question={question}
         />
       ))}
     </div>

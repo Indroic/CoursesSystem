@@ -6,10 +6,9 @@ from django.utils.translation import gettext_lazy as _
 from exams.models import Exam
 from courses.models import Course
 
-from asposecells.api import Workbook
-import  jpype     
-import jinja2
+from .utils import generar_pdf
 # Create your models here.
+
 
 
 class ExamRealized(models.Model):
@@ -72,17 +71,10 @@ class Certificate(models.Model):
         return f"{self.user} - {self.course} - {self.date}"
     
 
-    #def save(self, *args, **kwargs):
-#
-    #    env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.join(settings.BASE_DIR, 'media/pdf/')))
-#
-    #    template = env.get_template('plantilla.html')
-#
-    #    html_out = template.render({'userName': self.user.username, 'courseName': self.course.name})
-#
-    #    archivo = Workbook(html_out)
-#
-#
-    #    self.pdf = archivo.save(os.path.join(settings.BASE_DIR, f'media/pdf/{self.user}-{self.course}.pdf'))
-#
-    #    super().save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+
+       pdf = generar_pdf(self.user, self.course)
+
+       self.pdf = pdf
+
+       super().save(*args, **kwargs)

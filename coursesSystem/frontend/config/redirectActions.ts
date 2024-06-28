@@ -10,9 +10,8 @@ const redirectCourses = async () => {
   return await redirect("/home");
 };
 
-const redirectCourseInfo = async (id:string) => {
+const redirectCourseInfo = async (id: string) => {
   return await redirect(`/home/courses/${id}`);
 };
-
 
 export { redirectlogin, redirectCourses, redirectCourseInfo };

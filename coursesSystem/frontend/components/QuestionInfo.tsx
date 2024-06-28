@@ -5,7 +5,6 @@ import { useFormik } from "formik";
 import {
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Modal,
   ModalContent,
@@ -22,12 +21,15 @@ import {
   DropdownItem,
   DropdownTrigger,
 } from "@nextui-org/react";
+import { RiArrowDownSLine } from "@remixicon/react";
 
 import OptionInfo from "./OptionInfo";
+
 import { QuestionInterface, OptionInterface } from "@/types/courses";
 import { DeleteQuestion, CreateOption } from "@/config/axios_auth";
-import { useQuestions, useOptions } from "@/store/exams";
-import { RiArrowDownSLine } from "@remixicon/react";
+import { useQuestions } from "@/store/exams";
+
+import { GetOptionsOfQuestionRequest } from "@/config/axios_auth";
 
 const QuestionInfo = ({
   question,
@@ -39,7 +41,7 @@ const QuestionInfo = ({
   const [selected, setSelected] = useState("options");
   const { onOpen, onOpenChange, isOpen } = useDisclosure();
   const { deleteQuestion } = useQuestions();
-  const { addOption, getOptions, options } = useOptions();
+  const [options, setOptions] = useState<OptionInterface[]>([]);
   const optionFormik = useFormik({
     initialValues: {
       content: "",
@@ -50,7 +52,7 @@ const QuestionInfo = ({
       const request = await CreateOption(values, accessToken);
 
       if (request.status === 201) {
-        addOption(request.data);
+        options.push(request.data as OptionInterface);
         optionFormik.resetForm();
         setSelected("options");
       }
@@ -59,23 +61,39 @@ const QuestionInfo = ({
 
   const handleDelete = async () => {
     const request = await DeleteQuestion(question.id, accessToken);
+
     if (request.status === 204) {
       deleteQuestion(question);
     }
   };
 
   useEffect(() => {
-    getOptions(question.id);
-  }, []);
+    const fetchData = async () => {
+      let response = await GetOptionsOfQuestionRequest(question.id);
+
+      if (response.status === 200) {
+        setOptions(response.data as OptionInterface[]);
+      }
+    };
+
+    const handleDeleteOptionEvent = (event: CustomEvent) => {
+      const deletedOptionId = event.detail;
+
+      setOptions(options.filter((option) => option.id !== deletedOptionId));
+    };
+
+    document.addEventListener("optionDeleted", handleDeleteOptionEvent);
+    fetchData();
+  }, [options]);
 
   return (
     <>
       <Modal
-        isOpen={isOpen}
-        onClose={onOpenChange}
         className="dark max-h-sm"
-        size="lg"
+        isOpen={isOpen}
         scrollBehavior="inside"
+        size="lg"
+        onClose={onOpenChange}
       >
         <ModalContent>
           {(onClose) => (
@@ -93,8 +111,8 @@ const QuestionInfo = ({
                 >
                   <Tab
                     key="options"
-                    title="Opciones"
                     className="grid grid-cols-2 gap-10"
+                    title="Opciones"
                   >
                     {options.map((option: OptionInterface) => (
                       <OptionInfo
@@ -106,8 +124,8 @@ const QuestionInfo = ({
                   </Tab>
                   <Tab
                     key="add_option"
-                    title="Añadir Opcion"
                     className="flex flex-col gap-5"
+                    title="Añadir Opcion"
                   >
                     <Input
                       label="Contenido de la Opcion"
@@ -141,8 +159,8 @@ const QuestionInfo = ({
       <Card
         as="div"
         className="relative py-0 px-0 min-w-40 max-w-24  h-full min-h-36  gap-0 shadow-lg shadow-blue-900 hover:shadow-blue-700 transition-shadow"
-        onPress={() => onOpen()}
         onClick={() => onOpen()}
+        onPress={() => onOpen()}
       >
         <CardHeader className="absolute top-0 right-0 pb-0 pt-0 px-0 flex-col items-end w-full">
           <Dropdown>

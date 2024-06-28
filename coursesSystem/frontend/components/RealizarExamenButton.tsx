@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
 import {
   Button,
   Modal,
@@ -10,20 +9,21 @@ import {
   ModalHeader,
   ModalFooter,
   useDisclosure,
-  Checkbox,
-  CheckboxGroup,
 } from "@nextui-org/react";
+import { useSession } from "next-auth/react";
 
-import { VerifyRequest, CreateExamRealized, CreateCertificate } from "@/config/axios_auth";
-
+import {
+  VerifyRequest,
+  CreateExamRealized,
+  CreateCertificate,
+} from "@/config/axios_auth";
 import {
   CourseInterface,
   ExamInterface,
   QuestionInterface,
-  OptionInterface,
 } from "@/types/courses";
-import { useSession } from "next-auth/react";
 import { useExams, useQuestions, useOptions } from "@/store/exams";
+import OptionsList from "./OptionsList";
 
 const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
   const [examen, setExamen] = useState<ExamInterface>();
@@ -38,44 +38,49 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
   const { data: session, status } = useSession();
 
   useEffect(() => {
-    let examen = getExam(course.id);
+    const fetchData = async () => {
+      let examen = await getExam(course.id);
 
-    if (examen) {
-      setExamen(examen);
-      getQuestions(examen.id);
-      getOptions(examen.id);
-    }
-    if (status !== "loading") {
-      let verify = VerifyRequest(
-        session?.user.name,
-        session?.user.accessToken
-      ).then((response) => {
-        setData({
-          accessToken: session?.user.accessToken,
-          userID: response.data.user_id,
-        });
-      });
-    }
+      if (examen) {
+        setExamen(examen);
+        getQuestions(examen.id);
+      }
+
+      if (status !== "loading") {
+        let verify = await VerifyRequest(
+          session?.user.name,
+          session?.user.accessToken
+        );
+
+        if (verify.status === 200) {
+          setData({
+            accessToken: session?.user.accessToken,
+            userID: verify.data.user_id,
+          });
+        }
+      }
+    };
+
+    fetchData();
   }, [getExam, session, status]);
 
   const createCertificado = async () => {
-    let response = await CreateExamRealized(
-      user: data.userID,
+    let response = await CreateExamRealized({
       exam: examen?.id,
-
-    )
+      user: data.userID,
+    });
 
     if (response.status === 201 || response.status === 200) {
-      let examenRealizado = response.data
+      let examenRealizado = response.data;
 
-      let response2 = await CreateCertificate(
+      let response2 = await CreateCertificate({
         user: data.userID,
         examrealized: examenRealizado.id,
-        course: course.id
-      )
+        course: course.id,
+      });
 
       if (response2.status === 201 || response2.status === 200) {
-        console.log("Certificado creado");
+        window.location.href = response2.data.pdf;
       }
     }
   };
@@ -92,15 +97,11 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
                 </ModalHeader>
                 <ModalBody>
                   {questions?.map((question: QuestionInterface) => (
-                    <section key={question.id}>
-                      <p>{question.question}</p>
-                      <CheckboxGroup>
-                        {options?.map((option: OptionInterface) => (
-                          <Checkbox key={option.id} value={option.id}>
-                            {option.content}
-                          </Checkbox>
-                        ))}
-                      </CheckboxGroup>
+                    <section key={question.id} className="flex flex-col gap-2">
+                      <p className="flex flex-col font-bold">{question.question}</p>
+                      <div className="ml-2 flex flex-col gap-2 ">
+                        <OptionsList question={question} />
+                      </div>
                     </section>
                   ))}
                 </ModalBody>
@@ -114,7 +115,9 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
                   >
                     Cerrar
                   </Button>
-                  <Button color="primary">Realizar</Button>
+                  <Button color="primary" onClick={() => createCertificado()}>
+                    Realizar
+                  </Button>
                 </ModalFooter>
               </>
             );
@@ -127,3 +130,5 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
     </>
   );
 };
+
+export default RealizarExamenButton;

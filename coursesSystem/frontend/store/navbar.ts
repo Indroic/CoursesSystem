@@ -24,7 +24,7 @@ const useNavbar = create<NavbarState>((set) => ({
   loaded: false,
   items: [],
   toggleMenu: () =>
-  set((state) => ({ ...state, isMenuOpen: !state.isMenuOpen })),
+    set((state) => ({ ...state, isMenuOpen: !state.isMenuOpen })),
   setItems: (items) => set({ items }),
   changeLoaded: () => set({ loaded: true }),
 }));

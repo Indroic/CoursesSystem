@@ -1,7 +1,16 @@
 "use client";
 
-import { Button, Input, Link, useDisclosure, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, } from "@nextui-org/react";
-
+import {
+  Button,
+  Input,
+  Link,
+  useDisclosure,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@nextui-org/react";
 import { useState } from "react";
 
 import useRegisterForm from "@/hooks/registerHooks";
@@ -77,8 +86,8 @@ export default function Register() {
           <Input
             required
             errorMessage={errorMessage.lastName}
-            isInvalid={isInvalid.lastName}
             id="lastName"
+            isInvalid={isInvalid.lastName}
             label="Primer Apellido"
             placeholder="Ingrese su Apellido"
             radius="sm"
@@ -90,8 +99,8 @@ export default function Register() {
         <Input
           required
           errorMessage={errorMessage.ci}
-          isInvalid={isInvalid.ci}
           id="ci"
+          isInvalid={isInvalid.ci}
           label="Ingrese su Cédula de Identidad"
           placeholder="Ingrese su CI"
           radius="sm"

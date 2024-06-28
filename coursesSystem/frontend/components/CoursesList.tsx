@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import { ScrollShadow } from "@nextui-org/react";
 
 import CourseInfo from "./CourseInfo";
-import useCourses from "@/store/courses";
 import DropDownCourse from "./DropDownCourse";
+
+import useCourses from "@/store/courses";
 
 export default function CoursesList({
   getUserCourses,
@@ -13,7 +14,7 @@ export default function CoursesList({
   DropDown,
   href,
   accessToken,
-  userID
+  userID,
 }: {
   accessToken: string;
   getUserCourses?: string;
@@ -38,25 +39,34 @@ export default function CoursesList({
               <a href={`/home/courses/${course.id}`}>
                 <CourseInfo
                   key={course.id}
+                  DropDown={
+                    DropDown ? (
+                      <DropDownCourse
+                        accessToken={accessToken}
+                        course={course}
+                      />
+                    ) : null
+                  }
                   id={course.id}
                   level={course.level}
                   miniature={course.miniature}
                   modules={course.num_modules}
                   name={course.name}
-                  DropDown={
-                    DropDown ? <DropDownCourse course={course} accessToken={accessToken}  /> : null
-                  }
                 />
               </a>
             ) : (
               <CourseInfo
                 key={course.id}
+                DropDown={
+                  DropDown ? (
+                    <DropDownCourse accessToken={accessToken} course={course} />
+                  ) : null
+                }
                 id={course.id}
                 level={course.level}
                 miniature={course.miniature}
                 modules={course.num_modules}
                 name={course.name}
-                DropDown={DropDown ? <DropDownCourse course={course} accessToken={accessToken} /> : null}
               />
             )}
           </li>

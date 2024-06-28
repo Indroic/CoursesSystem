@@ -49,8 +49,6 @@ interface OptionInterface extends BaseInterface {
   is_correct: boolean;
 }
 
-
-
 export type {
   CourseInterface,
   ModuleInterface,

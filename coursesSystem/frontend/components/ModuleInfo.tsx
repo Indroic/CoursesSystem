@@ -1,21 +1,12 @@
 "use client";
 
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
-import LessonsList from "./LessonsList";
-import {
-  CreateLessonRequest,
-  UpdateModuleRequest,
-  DeleteModule,
-} from "@/config/axios_auth";
-import { LessonInterface, ModuleInterface } from "@/types/courses";
-
 import {
   RiBookFill,
   RiGalleryUploadFill,
   RiArrowDownSLine,
 } from "@remixicon/react";
-
 import {
   Card,
   CardHeader,
@@ -38,8 +29,15 @@ import {
   DropdownMenu,
 } from "@nextui-org/react";
 
-import { useVideoDropZone, useImageDropZone } from "@/hooks/DropZones";
+import LessonsList from "./LessonsList";
 
+import {
+  CreateLessonRequest,
+  UpdateModuleRequest,
+  DeleteModule,
+} from "@/config/axios_auth";
+import { LessonInterface, ModuleInterface } from "@/types/courses";
+import { useVideoDropZone, useImageDropZone } from "@/hooks/DropZones";
 import useLessons from "@/store/lessons";
 import useModules from "@/store/modules";
 
@@ -78,16 +76,19 @@ const ModuleInfo = ({
           ...prevState,
           video: "Debe subir un video.",
         }));
+
         return;
       }
 
       const response = await CreateLessonRequest(
         formikLesson.values,
-        accessToken
+        accessToken,
       );
+
       if (response.status === 201) {
         formikLesson.resetForm();
         let lesson: LessonInterface = response.data;
+
         module.num_lessons = module.num_lessons + 1;
         updateModule(module);
         addLesson(lesson);
@@ -105,7 +106,7 @@ const ModuleInfo = ({
       const response = await UpdateModuleRequest(
         values,
         module.id,
-        accessToken
+        accessToken,
       );
     },
   });
@@ -118,6 +119,7 @@ const ModuleInfo = ({
     } catch (e) {
       try {
         let errors = e.response.data;
+
         console.log(errors);
         if (errors) {
           Object.keys(errors).forEach((key) => {
@@ -148,11 +150,11 @@ const ModuleInfo = ({
   return (
     <>
       <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
         backdrop="blur"
-        size="4xl"
         className="dark"
+        isOpen={isOpen}
+        size="4xl"
+        onOpenChange={onOpenChange}
       >
         <ModalContent>
           {(onClose) => {
@@ -163,18 +165,18 @@ const ModuleInfo = ({
                 </ModalHeader>
                 <ModalBody>
                   <Tabs>
-                    <Tab title="Editar Módulo" className="flex flex-col gap-5">
+                    <Tab className="flex flex-col gap-5" title="Editar Módulo">
                       <Input
                         id="name"
                         label="Nombre del Módulo"
-                        onChange={formikUpdateModule.handleChange}
                         value={formikUpdateModule.values.name}
+                        onChange={formikUpdateModule.handleChange}
                       />
                       <Textarea
                         id="description"
                         label="Descripción del Módulo"
-                        onChange={formikUpdateModule.handleChange}
                         value={formikUpdateModule.values.description}
+                        onChange={formikUpdateModule.handleChange}
                       />
                       <Button
                         color="primary"
@@ -187,23 +189,23 @@ const ModuleInfo = ({
                     </Tab>
                     <Tab title="Lecciones">
                       <LessonsList
-                        getModuleLessons={module.id}
                         accessToken={accessToken}
+                        getModuleLessons={module.id}
                       />
                     </Tab>
-                    <Tab title="Añadir Lección" className="flex flex-col gap-5">
+                    <Tab className="flex flex-col gap-5" title="Añadir Lección">
                       <Input
                         required
+                        errorMessage={lessonsErrors.title}
                         id="title"
+                        isInvalid={lessonsErrors.title ? true : false}
                         label="Titulo de la Lección"
                         onChange={formikLesson.handleChange}
-                        errorMessage={lessonsErrors.title}
-                        isInvalid={lessonsErrors.title ? true : false}
                       />
                       <section className="flex flex-row gap-5 ">
                         <div
-                          id="video"
                           className="relative flex items-center justify-center w-full"
+                          id="video"
                           {...getVideoRootProps()}
                         >
                           <label
@@ -256,8 +258,8 @@ const ModuleInfo = ({
                         </div>
 
                         <div
-                          id="miniature"
                           className="relative flex items-center justify-center w-full"
+                          id="miniature"
                           {...getImageRootProps()}
                         >
                           <label
@@ -306,8 +308,8 @@ const ModuleInfo = ({
                         required
                         id="description"
                         label="Descripción de la Lección"
-                        onChange={formikLesson.handleChange}
                         value={formikLesson.values.description}
+                        onChange={formikLesson.handleChange}
                       />
                       <Button
                         color="primary"
@@ -320,7 +322,7 @@ const ModuleInfo = ({
                     </Tab>
                   </Tabs>
                 </ModalBody>
-                <ModalFooter></ModalFooter>
+                <ModalFooter />
               </>
             );
           }}

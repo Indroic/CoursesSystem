@@ -10,7 +10,7 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Button
+  Button,
 } from "@nextui-org/react";
 import { RiArrowDownSLine } from "@remixicon/react";
 
@@ -18,14 +18,20 @@ import { OptionInterface } from "@/types/courses";
 import { DeleteOption } from "@/config/axios_auth";
 import { useOptions } from "@/store/exams";
 
-const OptionInfo = ({ option, accessToken }: { option: OptionInterface, accessToken: string }) => {
-  const { deleteOption } = useOptions();
+const OptionInfo = ({
+  option,
+  accessToken,
+}: {
+  option: OptionInterface;
+  accessToken: string;
+}) => {
 
   const handleDelete = async () => {
     const request = await DeleteOption(option.id, accessToken);
-    if (request.status === 204) {
-      deleteOption(option);
-    }
+
+    const deleteEvent = new CustomEvent('optionDeleted', { detail: option.id });
+    
+    document.dispatchEvent(deleteEvent)
   };
 
   return (
@@ -36,18 +42,16 @@ const OptionInfo = ({ option, accessToken }: { option: OptionInterface, accessTo
       <CardHeader>
         <Dropdown>
           <DropdownTrigger>
-            <Button className="bg-transparent absolute top-0 right-0" ><RiArrowDownSLine size={20} /></Button>
+            <Button className="bg-transparent absolute top-0 right-0">
+              <RiArrowDownSLine size={20} />
+            </Button>
           </DropdownTrigger>
           <DropdownMenu>
-            <DropdownItem
-              color="danger"
-              onClick={handleDelete}
-            >
+            <DropdownItem color="danger" onClick={handleDelete}>
               Eliminar
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
-            
       </CardHeader>
       <CardBody className="flex flex-row justify-center items-center overflow-visible p-2 md:px-4 w-full text-pretty">
         <span className="font-semibold text-xs md:text-sm w-full dark:text-white">

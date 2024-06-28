@@ -2,9 +2,7 @@
 
 import React, { useState } from "react";
 import { useFormik } from "formik";
-
 import { RiArrowDownSLine, RiGalleryUploadFill } from "@remixicon/react";
-
 import {
   Card,
   CardHeader,
@@ -28,9 +26,7 @@ import {
 import { LessonInterface } from "@/types/courses";
 import { DeleteLesson } from "@/config/axios_auth";
 import useLessons from "@/store/lessons";
-
 import { useVideoDropZone, useImageDropZone } from "@/hooks/DropZones";
-
 import { UpdateLessonRequest } from "@/config/axios_auth";
 
 const LessonInfo = ({
@@ -76,14 +72,15 @@ const LessonInfo = ({
       formikLesson.values.video = acceptedVideoFiles[0];
 
       const datosNoNulos = Object.fromEntries(
-        Object.entries(values).filter(([_, v]) => v !== null)
-      )
+        Object.entries(values).filter(([_, v]) => v !== null),
+      );
 
       const response = await UpdateLessonRequest(
         datosNoNulos,
         lesson.id,
-        accessToken
+        accessToken,
       );
+
       if (response.status === 201) {
         formikLesson.resetForm();
         onOpenChange();
@@ -96,6 +93,7 @@ const LessonInfo = ({
       let response = await formikLesson.submitForm();
     } catch (e) {
       let errors = e.response.data;
+
       console.log(errors);
       if (errors) {
         Object.keys(errors).forEach((key) => {
@@ -109,32 +107,33 @@ const LessonInfo = ({
   return (
     <>
       <Modal
-        className="flex flex-col gap-5"
-        onOpenChange={onOpenChange}
+        className="flex flex-col gap-5 dark"
         isOpen={isOpen}
         size="4xl"
-        className="dark"
+        onOpenChange={onOpenChange}
       >
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader>
-                <h1 className="text-2xl font-bold dark:text-white">Leccion: {lesson.title}</h1>
+                <h1 className="text-2xl font-bold dark:text-white">
+                  Leccion: {lesson.title}
+                </h1>
               </ModalHeader>
               <ModalBody>
                 <Input
                   required
+                  errorMessage={lessonsErrors.title}
                   id="title"
+                  isInvalid={lessonsErrors.title ? true : false}
                   label="Titulo de la Lección"
                   value={formikLesson.values.title}
                   onChange={formikLesson.handleChange}
-                  errorMessage={lessonsErrors.title}
-                  isInvalid={lessonsErrors.title ? true : false}
                 />
                 <section className="flex flex-row gap-5 ">
                   <div
-                    id="video"
                     className="relative flex items-center justify-center w-full"
+                    id="video"
                     {...getVideoRootProps()}
                   >
                     <label
@@ -187,8 +186,8 @@ const LessonInfo = ({
                   </div>
 
                   <div
-                    id="miniature"
                     className="relative flex items-center justify-center w-full"
+                    id="miniature"
                     {...getImageRootProps()}
                   >
                     <label
@@ -237,8 +236,8 @@ const LessonInfo = ({
                   required
                   id="description"
                   label="Descripción de la Lección"
-                  onChange={formikLesson.handleChange}
                   value={formikLesson.values.description}
+                  onChange={formikLesson.handleChange}
                 />
                 <Button
                   color="primary"
@@ -277,7 +276,10 @@ const LessonInfo = ({
               </DropdownItem>
               <DropdownItem
                 color="danger"
-                onClick={() => {DeleteLesson(lesson.id, accessToken); deleteLesson(lesson);}}
+                onClick={() => {
+                  DeleteLesson(lesson.id, accessToken);
+                  deleteLesson(lesson);
+                }}
               >
                 Eliminar Lección
               </DropdownItem>
@@ -289,7 +291,7 @@ const LessonInfo = ({
             {lesson.title}
           </span>
         </CardBody>
-        <CardFooter className="flex flex-row justify-between p-2 md:p-4"></CardFooter>
+        <CardFooter className="flex flex-row justify-between p-2 md:p-4" />
       </Card>
     </>
   );

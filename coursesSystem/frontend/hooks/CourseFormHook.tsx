@@ -96,7 +96,7 @@ export const useCourseForm = ({
   const isInvalidLevel = (level: string) => {
     const levelRegex = /^[a-zA-Z]*$/;
 
-    if(!level){
+    if (!level) {
       setErrorMesages((prevState) => ({
         ...prevState,
         level: "Seleccione un Nivel",
@@ -107,7 +107,7 @@ export const useCourseForm = ({
         level: true,
       }));
 
-      return false
+      return false;
     }
 
     if (!levelRegex.test(level)) {
@@ -214,7 +214,6 @@ export const useCourseForm = ({
     }
 
     const request = await CreateCourseRequest(formData, accessToken);
-
 
     return request;
   };

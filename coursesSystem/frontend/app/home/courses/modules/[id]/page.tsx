@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Video from "next-video";
+
 import {
   ModuleInterface,
   CourseInterface,
   LessonInterface,
 } from "@/types/courses";
-import Video from "next-video";
 import {
   MenuSelect,
   MenuSelectBody,
@@ -42,7 +43,7 @@ export default function Lesson({ params }: { params: { id: string } }) {
           const lessonsData = (await GetLessonsOfModuleRequest(module.id)).data;
 
           return { module, lessons: lessonsData };
-        })
+        }),
       );
 
       setModulesWithLessons(modulesWithLessonsData);
@@ -65,12 +66,12 @@ export default function Lesson({ params }: { params: { id: string } }) {
             >
               {moduleWithLessons.lessons.map((lesson: LessonInterface) => (
                 <button
+                  key={lesson.id}
+                  className="m-0 p-0 text-start justify-start"
                   onClick={() => {
                     setLesson(lesson);
                     setModule(moduleWithLessons.module);
                   }}
-                  className="m-0 p-0 text-start justify-start"
-                  key={lesson.id}
                 >
                   {lesson.title}
                 </button>

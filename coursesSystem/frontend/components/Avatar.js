@@ -1,8 +1,6 @@
 "use client";
-import { Avatar as NextUIAvatar, Spinner } from "@nextui-org/react";
+import { Avatar as NextUIAvatar, Spinner, Image } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
-
-import AvatarImage from "./AvatarImage";
 
 export default function Avatar() {
   const { data: session, status } = useSession();
@@ -13,7 +11,10 @@ export default function Avatar() {
 
   return (
     <div className="flex flex-row gap-3 justify-center items-center">
-      <NextUIAvatar name={session?.user?.name} src={session?.user?.picture} ImgComponent={AvatarImage}/>
+      <NextUIAvatar
+        name={session?.user?.name}
+        src={session?.user?.picture}
+      />
       <span className="font-bold text-white">{session?.user?.name}</span>
     </div>
   );

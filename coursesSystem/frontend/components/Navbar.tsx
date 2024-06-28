@@ -13,11 +13,10 @@ import NextLink from "next/link";
 import { useEffect } from "react";
 import { signOut } from "next-auth/react";
 import { getCookie } from "cookies-next";
-import { memo } from "react";
-
-import useNavbar from "@/store/navbar";
 
 import DropDownAvatar from "./DropDownAvatar";
+
+import useNavbar from "@/store/navbar";
 
 export const Navbar = () => {
   const { isMenuOpen, items, toggleMenu, setItems, loaded, changeLoaded } =
@@ -41,15 +40,17 @@ export const Navbar = () => {
           {
             label: "Inicio",
             href: "/",
-          }
+          },
         ].filter(
-          (item) => !item.permission || permissions.includes(item.permission)
+          (item) => !item.permission || permissions.includes(item.permission),
         );
+
         setItems(filteredItems);
-        
+
         changeLoaded();
       }
     };
+
     fetchPermissions();
   }, []);
 
@@ -101,9 +102,9 @@ export const Navbar = () => {
         ))}
         <NavbarMenuItem className="mt-4">
           <NavbarItem
-            onClick={() => signOut()}
-            className="text-danger"
             as={"button"}
+            className="text-danger"
+            onClick={() => signOut()}
           >
             Cerrar Sesion
           </NavbarItem>

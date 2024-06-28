@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { UpdateCourseRequest } from "@/config/axios_auth";
-
 import { CourseInterface } from "@/types/courses";
 
 export const useUpdateCourseForm = ({
@@ -211,11 +210,14 @@ export const useUpdateCourseForm = ({
     }
 
     const datosNoNulos = Object.fromEntries(
-      Object.entries(formData).filter(([_, v]) => v !== null)
+      Object.entries(formData).filter(([_, v]) => v !== null),
     );
 
-
-    const request = await UpdateCourseRequest(datosNoNulos, accessToken, course.id);
+    const request = await UpdateCourseRequest(
+      datosNoNulos,
+      accessToken,
+      course.id,
+    );
 
     return request;
   };

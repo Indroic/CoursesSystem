@@ -1,4 +1,5 @@
 import { create } from "zustand";
+
 import {
   GetExamsOfCourseRequest,
   GetQuestionsOfExamRequest,
@@ -13,7 +14,7 @@ import {
 interface ExamState {
   exams: ExamInterface[];
   getExams: (courseID: string) => void;
-  getExam: (id: string) => void | ExamInterface;
+  getExam: (id: string) => Promise<ExamInterface>;
   addExam: (exam: ExamInterface) => void;
   updateExam: (exam: ExamInterface) => void;
   deleteExam: (exam: ExamInterface) => void;
@@ -65,9 +66,10 @@ const useExams = create<ExamState>((set) => ({
     }
   },
   getExam: async (id) => {
-    const examen = await GetExamsOfCourseRequest(id);
+    const response = await GetExamsOfCourseRequest(id);
+    const examen: ExamInterface = response.data[0];
 
-    return examen.data as ExamInterface;
+    return examen;
   },
 }));
 // Questions store

@@ -24,11 +24,24 @@ const MenuSelectHeader = ({ children }: { children: React.ReactNode }) => {
 
 const MenuSelectBody = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <div className={"order-1 py-5 px-0 flex flex-col gap-4  transition-all ease-in-out duration-300"}>{children}</div>
+    <div
+      className={
+        "order-1 py-5 px-0 flex flex-col gap-4  transition-all ease-in-out duration-300"
+      }
+    >
+      {children}
+    </div>
   );
 };
 
-const MenuSelectBodyItem = ({ title, children, ...props }: { title: string , children?: React.ReactNode }) => {
+const MenuSelectBodyItem = ({
+  title,
+  children,
+  ...props
+}: {
+  title: string;
+  children?: React.ReactNode;
+}) => {
   const [open, setOpen] = useState(false);
 
   return (

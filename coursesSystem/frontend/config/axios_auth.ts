@@ -46,7 +46,7 @@ const RegisterRequest = async (
   username: string,
   ci: string,
   email: string,
-  password: string
+  password: string,
 ) => {
   const request = await axiosRequest.post(url_register_user, {
     first_name: first_name,
@@ -124,7 +124,7 @@ const GetModuleRequest = async (module_id: string) => {
 
 const DeleteCourse = async (module_id: string, token: string) => {
   const request = await axiosRequestWithAuth(token).delete(
-    url_courses + `${module_id}`
+    url_courses + `${module_id}`,
   );
 };
 
@@ -161,7 +161,7 @@ const CreateModuleRequest = async (data: any, token: string) => {
 const UpdateCourseRequest = async (
   data: any,
   token: string,
-  courseID: string
+  courseID: string,
 ) => {
   const request = await axiosRequestWithAuth(token).patch(
     `${url_courses}${courseID}/`,
@@ -170,7 +170,7 @@ const UpdateCourseRequest = async (
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    }
+    },
   );
 
   return request;
@@ -179,7 +179,7 @@ const UpdateCourseRequest = async (
 const UpdateModuleRequest = async (
   data: any,
   moduleID: string,
-  accessToken: string
+  accessToken: string,
 ) => {
   const request = await axiosRequestWithAuth(accessToken).patch(
     `${url_modules}${moduleID}/`,
@@ -188,7 +188,7 @@ const UpdateModuleRequest = async (
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    }
+    },
   );
 
   return request;
@@ -196,14 +196,15 @@ const UpdateModuleRequest = async (
 
 const DeleteModule = async (moduleID: string, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).delete(
-    `${url_modules}${moduleID}/`
+    `${url_modules}${moduleID}/`,
   );
+
   return request;
 };
 
 const DeleteLesson = async (lessonID: string, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).delete(
-    `${url_lessons}${lessonID}/`
+    `${url_lessons}${lessonID}/`,
   );
 
   return request;
@@ -212,7 +213,7 @@ const DeleteLesson = async (lessonID: string, accessToken: string) => {
 const UpdateLessonRequest = async (
   data: any,
   lessonID: string,
-  accessToken: string
+  accessToken: string,
 ) => {
   const request = await axiosRequestWithAuth(accessToken).patch(
     `${url_lessons}${lessonID}/`,
@@ -221,8 +222,9 @@ const UpdateLessonRequest = async (
       headers: {
         "Content-Type": "multipart/form-data",
       },
-    }
+    },
   );
+
   return request;
 };
 
@@ -247,7 +249,7 @@ const GetOptionsOfQuestionRequest = async (questionID: string) => {
 const CreateExam = async (data: any, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).post(
     `${url_exams}`,
-    data
+    data,
   );
 
   return request;
@@ -256,7 +258,7 @@ const CreateExam = async (data: any, accessToken: string) => {
 const CreateQuestion = async (data: any, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).post(
     `${url_questions}`,
-    data
+    data,
   );
 
   return request;
@@ -265,7 +267,7 @@ const CreateQuestion = async (data: any, accessToken: string) => {
 const CreateOption = async (data: any, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).post(
     `${url_options}`,
-    data
+    data,
   );
 
   return request;
@@ -274,7 +276,7 @@ const CreateOption = async (data: any, accessToken: string) => {
 const UpdateExam = async (data: any, examID: string, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).patch(
     `${url_exams}${examID}/`,
-    data
+    data,
   );
 
   return request;
@@ -283,11 +285,11 @@ const UpdateExam = async (data: any, examID: string, accessToken: string) => {
 const UpdateQuestion = async (
   data: any,
   questionID: string,
-  accessToken: string
+  accessToken: string,
 ) => {
   const request = await axiosRequestWithAuth(accessToken).patch(
     `${url_questions}${questionID}/`,
-    data
+    data,
   );
 
   return request;
@@ -296,11 +298,11 @@ const UpdateQuestion = async (
 const UpdateOption = async (
   data: any,
   optionID: string,
-  accessToken: string
+  accessToken: string,
 ) => {
   const request = await axiosRequestWithAuth(accessToken).patch(
     `${url_options}${optionID}/`,
-    data
+    data,
   );
 
   return request;
@@ -308,7 +310,7 @@ const UpdateOption = async (
 
 const DeleteExam = async (examID: string, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).delete(
-    `${url_exams}${examID}/`
+    `${url_exams}${examID}/`,
   );
 
   return request;
@@ -316,7 +318,7 @@ const DeleteExam = async (examID: string, accessToken: string) => {
 
 const DeleteQuestion = async (questionID: string, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).delete(
-    `${url_questions}${questionID}/`
+    `${url_questions}${questionID}/`,
   );
 
   return request;
@@ -324,7 +326,7 @@ const DeleteQuestion = async (questionID: string, accessToken: string) => {
 
 const DeleteOption = async (optionID: string, accessToken: string) => {
   const request = await axiosRequestWithAuth(accessToken).delete(
-    `${url_options}${optionID}/`
+    `${url_options}${optionID}/`,
   );
 
   return request;

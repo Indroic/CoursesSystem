@@ -7,7 +7,6 @@ import {
   CardFooter,
 } from "@nextui-org/react";
 
-
 const CourseInfo = ({
   level,
   name,

@@ -12,8 +12,6 @@ interface ModuleState {
   getModule: (id: string) => void;
 }
 
-
-
 const useModules = create<ModuleState>((set) => ({
   modules: [],
   addModule: (module) =>
@@ -22,7 +20,7 @@ const useModules = create<ModuleState>((set) => ({
     set((state) => ({
       ...state,
       modules: state.modules.map((c: ModuleInterface) =>
-        c.id === module.id ? module : c
+        c.id === module.id ? module : c,
       ),
     })),
   deleteModule: (module) =>

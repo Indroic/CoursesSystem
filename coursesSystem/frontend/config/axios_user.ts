@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { base_ip, base_token_verify } from "./constands";
+import { base_ip } from "./constands";
 
 const auth_axios_instance = axios.create({
   baseURL: base_ip,

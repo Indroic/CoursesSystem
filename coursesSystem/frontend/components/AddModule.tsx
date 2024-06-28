@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useCallback } from "react";
+import React from "react";
 import { RiAddCircleFill } from "@remixicon/react";
-
 import {
   Card,
   CardBody,
@@ -47,8 +46,10 @@ const AddModule = ({
   const createModule = async () => {
     try {
       let request = await handleSubmit();
-      if(request){
+
+      if (request) {
         let moduleAdd: ModuleInterface = request.data;
+
         addModule(moduleAdd);
         course.num_modules += 1;
         updateCourse(course);
