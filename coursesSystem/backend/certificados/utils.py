@@ -7,7 +7,7 @@ from django.conf import settings
 def generar_pdf(user, course):
     env = jinja2.Environment(loader=jinja2.FileSystemLoader(os.path.join(settings.BASE_DIR, 'media/pdf/')))
 
-    conf = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
+    conf = pdfkit.configuration(wkhtmltopdf=settings.WKHTMLTOPDF_PATH)
 
     template = env.get_template('plantilla.html')
 
