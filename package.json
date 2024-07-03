@@ -11,9 +11,9 @@
     "dev-backend": "cd coursesSystem/backend && python manage.py runserver",
     "dev-frontend": "cd coursesSystem/frontend && npm run dev",
     "build-frontend": "cd coursesSystem/frontend && npm run build && npm run start",
-"start-frotnend":"cd coursesSystem/frontend && npm run start", 
+"start-frontend":"cd coursesSystem/frontend && npm run start", 
     "dev": "concurrently \"npm run dev-backend\" \"npm run dev-frontend\"",
-    "start": "concurrently \"npm run dev-backend\" \"npm run build-frontend\"",
+    "start": "concurrently \"npm run dev-backend\" \"npm run start-frontend\"",
     "co": "sui-mono commit",
     "migrate": "cd coursesSystem/backend && python manage.py makemigrations && python manage.py migrate",
     "create-superuser": "cd coursesSystem/backend && python manage.py createsuperuser"
