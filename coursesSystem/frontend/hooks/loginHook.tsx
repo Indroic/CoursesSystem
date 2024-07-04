@@ -48,23 +48,7 @@ const useLoginForm = () => {
     return true;
   };
 
-  const isInvalidPassword = () => {
-    const passwordRegex = /^.{8,}$/;
-
-    if (!passwordRegex.test(formData.password)) {
-      setErrorMessage((prevState) => ({
-        ...prevState,
-        password: "La contraseña no es válida.",
-      }));
-
-      setIsInvalid((prevState) => ({
-        ...prevState,
-        password: true,
-      }));
-
-      return false;
-    }
-
+  const isInvalidPassword = () => { 
     setErrorMessage((prevState) => ({
       ...prevState,
       password: "",
