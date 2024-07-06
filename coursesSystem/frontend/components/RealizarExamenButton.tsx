@@ -1,5 +1,6 @@
 "use client";
 
+import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import {
   Button,
@@ -20,6 +21,7 @@ import {
 import {
   CourseInterface,
   ExamInterface,
+  OptionInterface,
   QuestionInterface,
 } from "@/types/courses";
 import { useExams, useQuestions, useOptions } from "@/store/exams";
@@ -35,6 +37,16 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
   const { getQuestions, questions } = useQuestions();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { data: session, status } = useSession();
+  const [errorsMessage, seterrorsMessage] = useState({});
+  const [isValid, setIsValid] = useState({});
+  const [initialValues, setInitialValues] = useState({});
+  const [principalErrorMessage, setPrincipalErrorMessage] = useState("");
+
+  const formik = useFormik({
+    initialValues: initialValues,
+
+    onSubmit: () => {},
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +55,12 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
       if (examen) {
         setExamen(examen);
         getQuestions(examen.id);
+        for (let question of questions) {
+          setInitialValues({
+            ...initialValues,
+            [question.id]: "",
+          });
+        }
       }
 
       if (status !== "loading") {
@@ -84,6 +102,68 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
     }
   };
 
+  const verify = () => {
+    let values: { [key: string]: string } = formik.values;
+
+    if (Object.keys(values).length !== Object.keys(questions).length) {
+      setPrincipalErrorMessage("Por favor responda todas las preguntas");
+
+      return false;
+    }
+
+    for (const key in values) {
+      if (values[key]) {
+        let is_correct: string = values[key];
+
+        if (is_correct === "false") {
+          seterrorsMessage((prevState) => ({
+            ...prevState,
+            [key]: "Respuesta Incorrecta",
+          }));
+
+          setIsValid((prevState) => ({
+            ...prevState,
+            [key]: false,
+          }));
+
+          continue;
+        }
+        seterrorsMessage((prevState) => ({
+          ...prevState,
+          [key]: "",
+        }));
+
+        setIsValid((prevState) => ({
+          ...prevState,
+          [key]: true,
+        }));
+      }
+    }
+
+    setPrincipalErrorMessage("");
+
+    return true;
+  };
+
+  const verifyValid = () => {
+    let values: { [key: string]: string } = formik.values;
+
+    for (const key in values) {
+      if (values[key] === "false") {
+        return false;
+      }
+    }
+
+    return true;
+  };
+
+  const onSubmit = async () => {
+    verify();
+    if (verifyValid() === true) {
+      const certificado = await createCertificado();
+    }
+  };
+
   return (
     <>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
@@ -95,11 +175,21 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
                   <span>Examen: {examen?.title}</span>
                 </ModalHeader>
                 <ModalBody>
+                  <p className="font-bold text-normal text-red-500">
+                    {principalErrorMessage}
+                  </p>
                   {questions?.map((question: QuestionInterface) => (
                     <section key={question.id} className="flex flex-col gap-2">
-                      <p className="flex flex-col font-bold">{question.question}</p>
+                      <p className="flex flex-col font-bold">
+                        {question.question}
+                      </p>
                       <div className="ml-2 flex flex-col gap-2 ">
-                        <OptionsList question={question} />
+                        <OptionsList
+                          errorMessage={errorsMessage[question.id]}
+                          name={question.id}
+                          question={question}
+                          onChange={(e) => formik.handleChange(e)}
+                        />
                       </div>
                     </section>
                   ))}
@@ -114,7 +204,7 @@ const RealizarExamenButton = ({ course }: { course: CourseInterface }) => {
                   >
                     Cerrar
                   </Button>
-                  <Button color="primary" onClick={() => createCertificado()}>
+                  <Button color="primary" onClick={() => onSubmit()}>
                     Realizar
                   </Button>
                 </ModalFooter>

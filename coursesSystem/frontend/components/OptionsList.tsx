@@ -1,12 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Checkbox, CheckboxGroup } from "@nextui-org/react";
+import { Radio, RadioGroup } from "@nextui-org/react";
 
 import { OptionInterface, QuestionInterface } from "@/types/courses";
 import { GetOptionsOfQuestionRequest } from "@/config/axios_auth";
 
-const OptionsList = ({ question }: { question: QuestionInterface }) => {
+const OptionsList = ({
+  question,
+  onChange,
+  errorMessage,
+  name,
+}: {
+  question: QuestionInterface;
+  onChange: (e: any) => void;
+  errorMessage: string | undefined;
+  name: string;
+}) => {
   const [options, setOptions] = useState<OptionInterface[]>();
 
   useEffect(() => {
@@ -24,13 +34,18 @@ const OptionsList = ({ question }: { question: QuestionInterface }) => {
   }, [question, options]);
 
   return (
-    <CheckboxGroup>
+    <RadioGroup
+      errorMessage={errorMessage}
+      isInvalid={errorMessage ? true : false}
+      onChange={(e) => onChange(e)}
+      name={name}
+    >
       {options?.map((option: OptionInterface) => (
-        <Checkbox key={option.id} value={option.id}>
+        <Radio key={option.id} value={option.is_correct.toString()}>
           {option.content}
-        </Checkbox>
+        </Radio>
       ))}
-    </CheckboxGroup>
+    </RadioGroup>
   );
 };
 

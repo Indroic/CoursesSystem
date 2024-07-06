@@ -126,6 +126,8 @@ const DeleteCourse = async (module_id: string, token: string) => {
   const request = await axiosRequestWithAuth(token).delete(
     url_courses + `${module_id}`,
   );
+
+  return request;
 };
 
 const CreateLessonRequest = async (data: any, token: string) => {
